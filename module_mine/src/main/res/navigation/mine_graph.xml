@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mine_graph"
+    app:startDestination="@id/fragment_mineDestination_mine_fragment">
+
+    <fragment
+        android:id="@+id/fragment_mineDestination_mine_fragment"
+        android:name="com.example.feature_mine.ui.MineFragment"
+        android:label="MineFragment">
+
+        <action
+            android:id="@+id/action_mineFragment_to_settingsFragment"
+            app:destination="@id/fragment_mineDestination_setting_fragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_mineDestination_setting_fragment"
+        android:name="com.example.feature_mine.ui.SettingsFragment"
+        android:label="SettingsFragment" />
+</navigation>

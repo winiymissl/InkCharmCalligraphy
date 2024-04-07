@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+
+    }
+}
+
+rootProject.name = "MiaoBi"
+include ':app'
+include ':module_login'
+include ':common'
+include ':feature_theme'
+include ':module_mine'
+include ':module_community'
+include ':module_navigation'

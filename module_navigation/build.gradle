@@ -1,0 +1,58 @@
+apply from: rootProject.file('config.gradle')
+
+android {
+    namespace 'com.example.module_navigation'
+    compileSdk 34
+    defaultConfig {
+        if (isRunAlone.toBoolean()) {
+            applicationId "com.example.module_navigation"
+        }
+
+
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+}
+
+dependencies {
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    if (isRunAlone.toBoolean()) {
+        implementation(project(':common'))
+    } else {
+        implementation(project(':common'))
+        implementation project(':module_login')
+        implementation project(':module_mine')
+        implementation(project(':module_community'))
+    }
+    //navigation
+    def nav_version = "2.7.7"
+    //Java language implementation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

@@ -1,0 +1,10 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Login" parent="AppTheme">
+        <!-- 透明状态栏 -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- 透明导航栏 -->
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+</resources>
