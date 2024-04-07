@@ -1,0 +1,46 @@
+if (isRunAlone.toBoolean()) {
+    apply plugin: 'com.android.application'
+    apply plugin: "androidx.navigation.safeargs"
+} else {
+    apply plugin: 'com.android.library'
+}
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        ndk {
+            // 设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        sourceSets {
+            main {
+                // 单独调试与集成调试时使用不同的 AndroidManifest.xml 文件
+                if (isRunAlone.toBoolean()) {
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                    java {
+                        //当此Module作为单独的Application运行时，加载 "src/main"路径下的文件
+                        srcDirs 'src/main'
+                    }
+                } else {
+                    manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
+                    java {
+                        srcDirs 'src/main'
+                    }
+                }
+            }
+        }
+    }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+}

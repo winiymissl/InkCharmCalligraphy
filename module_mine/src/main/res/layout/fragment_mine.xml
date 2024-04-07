@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.example.feature_mine.data.model.UserInfoResult" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/include_login"
+            layout="@layout/user_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{item == null?View.GONE:View.VISIBLE}" />
+
+        <include
+            android:id="@+id/include_not_login"
+            layout="@layout/user_not_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{item == null ? View.VISIBLE : View.GONE}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
