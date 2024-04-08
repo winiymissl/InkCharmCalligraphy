@@ -13,14 +13,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.common.route.RouteConstant;
 import com.example.feature_mine.ui.adapter.MineListVIewAdapter;
 import com.example.feature_mine.ui.adapter.model.MineListViewModel;
 import com.example.feature_mine.ui.viewmodel.MineViewModel;
+import com.example.lib_annotation.Route;
+import com.example.lib_router_core.template.Router;
 import com.example.module_mine.R;
 import com.example.module_mine.databinding.FragmentMineBinding;
 import com.google.android.material.transition.MaterialFade;
 
+
+@Route(destinationText = RouteConstant.MINE_FRAGMENT)
 public class MineFragment extends Fragment {
     private FragmentMineBinding binding;
 
@@ -55,16 +59,18 @@ public class MineFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MineViewModel.class);
         MineListVIewAdapter adapter = new MineListVIewAdapter(MineListViewModel.getData());
+        NavController navController = NavHostFragment.findNavController(this);
         binding.includeLogin.listViewMine.setAdapter(adapter);
         binding.includeLogin.listViewMine.setOnItemClickListener((parent, view1, position, id) -> {
             if (position == 0) {
-                NavController navController = NavHostFragment.findNavController(this);
+
                 navController.navigate(R.id.fragment_mineDestination_setting_fragment);
             }
         });
         binding.includeNotLogin.buttonToLogin.setOnClickListener(v -> {
             try {
 //                ARouter.getInstance().build("/module_login/ui/LoginActivity").navigation();
+                Router.getInstance().build(RouteConstant.LOGIN_FRAGMENT).navigation(navController);
             } catch (Exception e) {
                 Log.d("世界是一个bug", e.toString());
             }

@@ -33,6 +33,7 @@ android {
                     manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
                     java {
                         srcDirs 'src/main'
+                        exclude '**/debug/**'
                     }
                 }
             }
@@ -42,5 +43,4 @@ android {
         viewBinding = true
         dataBinding = true
     }
-
 }

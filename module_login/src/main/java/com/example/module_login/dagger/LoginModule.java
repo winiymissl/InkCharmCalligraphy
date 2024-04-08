@@ -19,14 +19,14 @@ public class LoginModule {
 
     @Provides
     @PreActivity
-    public LoginAPI providerLoginAPI(Retrofit retrofit) {
+    public LoginAPI provideLoginAPI(Retrofit retrofit) {
         return retrofit.create(LoginAPI.class);
     }
 
 
     @Provides
     @PreActivity
-    public Repository providerRepository(RemoteDataSource remoteDataSource) {
+    public Repository provideRepository(RemoteDataSource remoteDataSource) {
         return new Repository(remoteDataSource);
     }
 }

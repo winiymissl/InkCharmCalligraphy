@@ -2,7 +2,6 @@ package com.example.module_login.ui;
 
 import android.os.Bundle;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.common.base.BaseActivity;
 import com.example.module_login.databinding.ActivityLoginBinding;
 

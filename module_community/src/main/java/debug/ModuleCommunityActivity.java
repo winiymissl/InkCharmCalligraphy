@@ -13,6 +13,5 @@ public class ModuleCommunityActivity extends BaseActivity<ActivityModuleCommunit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_module_community);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, CommunityFragment.newInstance()).commit();
     }
 }

@@ -1,8 +1,6 @@
 apply from: rootProject.file('config.gradle')
 
-apply {
-    plugin 'androidx.navigation.safeargs'
-}
+
 
 android {
     namespace 'com.example.module_community'
@@ -20,7 +18,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
+                arguments = [
+                        ROUTER_MODULE_NAME      : project.getName(),
+                        //这个navigation表的id, 如<navigation android:id="@+id/nav_graph_module_one">
+                        ROUTER_MODULE_GRAPH_NAME: "community_graph"
+                ]
             }
         }
 
@@ -39,6 +41,10 @@ android {
 dependencies {
     implementation(project(':common'))
 
+//    implementation(project(':lib_compiler'))
+//    implementation(project(':lib_annotation'))
+//    implementation(project(':lib_router_core'))
+
     implementation 'androidx.annotation:annotation:1.7.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
@@ -47,13 +53,11 @@ dependencies {
     api 'com.google.dagger:dagger-android-support:2.51.1'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.51.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.51.1'
-    implementation 'com.alibaba:arouter-api:1.5.2'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.7.7'
     implementation 'androidx.navigation:navigation-ui:2.7.7'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.5.2'
 }
 

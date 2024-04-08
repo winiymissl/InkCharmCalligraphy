@@ -22,6 +22,4 @@ public class NetModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
-
-
 }

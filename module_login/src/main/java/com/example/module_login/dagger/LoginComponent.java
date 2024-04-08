@@ -13,8 +13,10 @@ import dagger.Component;
  * @Date 2024-04-04 16:53
  * @Version 1.0
  */
+
+
 @PreActivity
-@Component(dependencies = AppComponent.class, modules = {LoginModule.class})
+@Component(modules = {LoginModule.class}, dependencies = {AppComponent.class})
 public interface LoginComponent {
     void injectTo(RegisterViewModel registerViewModel);
 
