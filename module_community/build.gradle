@@ -16,15 +16,15 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        ROUTER_MODULE_NAME      : project.getName(),
-                        //这个navigation表的id, 如<navigation android:id="@+id/nav_graph_module_one">
-                        ROUTER_MODULE_GRAPH_NAME: "community_graph"
-                ]
-            }
-        }
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = [
+//                        ROUTER_MODULE_NAME      : project.getName(),
+//                        //这个navigation表的id, 如<navigation android:id="@+id/nav_graph_module_one">
+//                        ROUTER_MODULE_GRAPH_NAME: "community_graph"
+//                ]
+//            }
+//        }
 
     }
 

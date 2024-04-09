@@ -11,4 +11,6 @@ public class RouteConstant {
     public static final String LOGIN_FRAGMENT = "fragment_loginDestination_login";
     public static final String MINE_FRAGMENT = "fragment_mineDestination_mine_fragment";
 
+    public static final String SETTING_FRAGMENT = "fragment_mineDestination_setting_fragment";
+
 }

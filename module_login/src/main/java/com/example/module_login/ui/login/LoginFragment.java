@@ -26,7 +26,6 @@ import com.example.module_login.ui.login.viewmodel.LoginViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-
 public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
 
     private LoginViewModel loginViewModel;
@@ -39,6 +38,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
 //        setSharedElementReturnTransition(TransitionInflater.from(requireContext()).inflateTransition(R.transition.transition_fragment));
         setEnterTransition(new Explode());
         setExitTransition(new Explode());
+
+
         return binding.getRoot();
     }
 
@@ -51,7 +52,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
         final TextInputEditText passwordEditText = binding.loginPassword;
         final MaterialButton loginButton = binding.buttonLogin;
         final ProgressBar loadingProgressBar = binding.loading;
-
+        binding.btnBack.setOnClickListener(v -> {
+            getActivity().supportFinishAfterTransition();
+        });
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {

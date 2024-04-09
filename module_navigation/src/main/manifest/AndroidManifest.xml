@@ -4,6 +4,7 @@
     <application
         android:theme="@style/AppTheme">
         <activity
+
             android:name=".NavigationActivity"
             android:exported="true">
             <intent-filter>

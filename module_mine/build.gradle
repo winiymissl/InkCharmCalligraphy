@@ -17,9 +17,10 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                        ROUTER_MODULE_NAME      : project.getName(),
-                        //这个navigation表的id, 如<navigation android:id="@+id/nav_graph_module_one">
-                        ROUTER_MODULE_GRAPH_NAME: "mine_graph"
+//                        ROUTER_MODULE_NAME      : project.getName(),
+//                        ROUTER_MODULE_GRAPH_NAME: "mine_graph",
+ROOM_ACCESSOR_NAME_PREFIX: "module_mine"
+
                 ]
             }
         }
@@ -35,14 +36,13 @@ android {
 }
 dependencies {
     implementation project(':common')
-
-
-        implementation(project(':lib_compiler'))
-    implementation(project(':lib_annotation'))
-    implementation(project(':lib_router_core'))
-
+//    annotationProcessor(project(':lib_dao_compiler'))
+//    annotationProcessor(project(':lib_compiler'))
+//    implementation(project(':lib_annotation'))
+//    implementation(project(':lib_router_core'))
 
     implementation 'androidx.preference:preference:1.2.1'
+    implementation project(path: ':module_login')
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.51.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.51.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

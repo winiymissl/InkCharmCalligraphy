@@ -3,13 +3,12 @@ package com.example.module_login.ui.login;
 import androidx.annotation.Nullable;
 
 import com.example.common.route.RouteConstant;
-import com.example.lib_annotation.Route;
 
 /**
  * Data validation state of the login form.
  */
 
-@Route(destinationText = RouteConstant.LOGIN_FRAGMENT)
+
 public class LoginFormState {
     @Nullable
     private Integer usernameError;

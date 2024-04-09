@@ -28,6 +28,8 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
@@ -49,6 +51,7 @@ import javax.lang.model.util.Types;
 
 @AutoService(Processor.class)
 @SupportedAnnotationTypes(ANNOTATION_TYPE_INTERCEPTOR)
+@SupportedSourceVersion(SourceVersion.RELEASE_17)
 public class InterceptorProcessor extends AbstractProcessor {
     private Map<Integer, Element> interceptors = new HashMap<>();
     private Elements elementUtils;

@@ -1,7 +1,8 @@
 package com.example.feature_mine.data.model;
 
+import androidx.room.Entity;
+
 import com.example.common.base.BaseResult;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @Date 2024-04-05 15:40
  * @Version 1.0
  */
+
 public class UserInfoResult extends BaseResult implements Serializable {
 
     private DataDTO data;

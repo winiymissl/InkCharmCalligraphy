@@ -7,15 +7,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.transition.Explode;
 
+import com.example.common.base.BaseFragment;
 import com.example.module_community.databinding.FragmentCommunityBinding;
 import com.example.module_community.ui.viewmodel.CommunityViewModel;
 
-public class CommunityFragment extends Fragment {
+public class CommunityFragment extends BaseFragment<FragmentCommunityBinding> {
 
-    private FragmentCommunityBinding binding;
     private CommunityViewModel mViewModel;
 
     public static CommunityFragment newInstance() {

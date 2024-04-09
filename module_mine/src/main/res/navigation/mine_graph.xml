@@ -9,13 +9,14 @@
         android:name="com.example.feature_mine.ui.MineFragment"
         android:label="MineFragment">
 
-        <action
-            android:id="@+id/action_mineFragment_to_settingsFragment"
-            app:destination="@id/fragment_mineDestination_setting_fragment" />
 
+        <action
+            android:id="@+id/action_fragment_mineDestination_mine_fragment_to_settingsFragment"
+            app:destination="@id/fragment_mineDestination_setting_fragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment_mineDestination_setting_fragment"
         android:name="com.example.feature_mine.ui.SettingsFragment"
         android:label="SettingsFragment" />
+
 </navigation>

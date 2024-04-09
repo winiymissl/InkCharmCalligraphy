@@ -42,10 +42,10 @@ public class ClassUtils {
      * @throws InterruptedException                 如果线程执行过程中被中断，抛出此异常。
      */
     public static Set<String> getFileNameByPackageName(Context context, final String packageName) throws PackageManager.NameNotFoundException, IOException, InterruptedException {
-        final Set<String> classNames = new HashSet<>(); // 用于存储匹配到的类名
+        final Set<String> classNames = new HashSet<>();
 
-        List<String> paths = getSourcePaths(context); // 获取应用的所有dex文件路径
-        final CountDownLatch parserCtl = new CountDownLatch(paths.size()); // 控制并发解析dex文件的线程数
+        List<String> paths = getSourcePaths(context);
+        final CountDownLatch parserCtl = new CountDownLatch(paths.size());
 
         for (final String path : paths) {
             DefaultPoolExecutor.getInstance().execute(new Runnable() {
@@ -55,7 +55,7 @@ public class ClassUtils {
 
                     try {
                         if (path.endsWith(EXTRACTED_SUFFIX)) {
-                            // 处理已提取的dex文件，避免权限错误
+                            //NOT use new DexFile(path), because it will throw "permission error in /data/dalvik-cache"
                             dexfile = DexFile.loadDex(path, path + ".tmp", 0);
                         } else {
                             dexfile = new DexFile(path);
@@ -64,36 +64,65 @@ public class ClassUtils {
                         Enumeration<String> dexEntries = dexfile.entries();
                         while (dexEntries.hasMoreElements()) {
                             String className = dexEntries.nextElement();
-                            // 匹配包名，并添加到集合中
                             if (className.startsWith(packageName)) {
                                 classNames.add(className);
                             }
                         }
                     } catch (Throwable ignore) {
-                        // 日志记录dex文件解析过程中的错误
                         Log.e(Constants.PROJECT, "Scan map file in dex files made error.", ignore);
                     } finally {
                         if (null != dexfile) {
-                            // 确保dex文件被正确关闭
                             try {
                                 dexfile.close();
                             } catch (Throwable ignore) {
                             }
                         }
 
-                        // 线程计数器减一，表示当前dex文件已处理完成
                         parserCtl.countDown();
                     }
                 }
             });
         }
 
-        // 等待所有线程完成dex文件的解析
         parserCtl.await();
+        Log.d("世界是一个bug", "Filter " + classNames.size() + " classes by packageName <" + packageName + ">");
 
-        // 日志记录匹配到的类名数量
         Log.d(Constants.PROJECT, "Filter " + classNames.size() + " classes by packageName <" + packageName + ">");
         return classNames;
+    }
+
+
+    public static List<String> getClassName(Context context, String packageName) {
+        //创建一个class对象集合
+        List<String> classList = new ArrayList<>();
+        String path = null;
+        try {
+            //通过包管理器   获取到应用信息类然后获取到APK的完整路径
+            path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).sourceDir;
+            Log.d("世界是一个bug", " 获取到应用信息类然后获取到APK的完整路径    ：   " + path);
+            //根据APK的完整路径获取到编译后的dex文件目录
+            DexFile dexfile = new DexFile(path);
+            //获得编译后的dex文件中的所有class
+            Enumeration<String> entries = dexfile.entries();
+
+            //然后进行遍历
+            while (entries.hasMoreElements()) {
+                //通过遍历所有的class的包名
+                String name = entries.nextElement();
+
+                //判断类的包名是否符合我们起的包名（com.hxg.util）
+                if (name.contains(packageName)) {
+                    Log.d("世界是一个bug", "符合条件的class     ：   " + name);
+                    //如果符合，就添加到集合中
+                    classList.add(name);
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return classList;
     }
 
 
@@ -117,6 +146,8 @@ public class ClassUtils {
         if (Router.debuggable()) {
             sourcePaths.addAll(tryLoadInstantRunDexFile(applicationInfo));
         }
+        Log.d("世界是一个bug", "管理器获取应用的ApplicationInfo : " + sourcePaths.size() + " : " + sourcePaths.toString());
+
         return sourcePaths;
     }
 

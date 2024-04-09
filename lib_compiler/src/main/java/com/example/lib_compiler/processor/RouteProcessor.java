@@ -20,6 +20,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,6 +33,8 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
@@ -48,19 +51,42 @@ import javax.lang.model.util.Types;
 
 @AutoService(Processor.class)
 @SupportedAnnotationTypes(ANNOTATION_TYPE_ROUTE)
+@SupportedSourceVersion(SourceVersion.RELEASE_17)
 public class RouteProcessor extends AbstractProcessor {
     private Map<String, RouteMeta> routeMetaMap = new TreeMap<>();
     private Elements elementUtils;
     private Types types;
     private Filer filer;
+
+    private File rootFile;
     private String moduleName;
     private String graphName;
 
     private Logger logger;
 
+//    public File getRootFile() {
+//        try {
+//            JavaFileObject dummySourceFile = filer.createSourceFile("dummy"+System.currentTimeMillis());
+//            String dummySourceFilePath = dummySourceFile.toUri().toString();
+//            if(dummySourceFilePath.startsWith("file:")){
+//                if(!dummySourceFilePath.contains("file://")){
+//                    dummySourceFilePath = dummySourceFilePath.substring("file:".length());
+//                }
+//            }else{
+//                dummySourceFilePath  ="";
+//            }
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return null;
+//    }
+
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
+//        rootFile = processingEnv.
         filer = processingEnv.getFiler();
         elementUtils = processingEnv.getElementUtils();
         types = processingEnv.getTypeUtils();
@@ -94,7 +120,11 @@ public class RouteProcessor extends AbstractProcessor {
         if (isEmpty(graphName)) {
             logger.error(NO_MODULE_NAME_TIPS);
             throw new RuntimeException("Router::Compiler >>> No graph name, for more information, look at gradle log.");
+        } else {
+            graphName = graphName.replaceAll("[^0-9a-zA-Z_]+", "");
+            logger.info("The user has configuration the module graph name, it was [" + graphName + "]");
         }
+
         logger.info(">>> RouteProcessor init. <<<");
     }
 
@@ -151,6 +181,7 @@ public class RouteProcessor extends AbstractProcessor {
                  * */
                 routeMetaMap.put(routeMeta.getDestinationText(), routeMeta);
             }
+            logger.info(">>>     routeMetaMap中总数  :  " + routeMetaMap.size());
             TypeElement iRouteRoot = elementUtils.getTypeElement(IROUTE_ROOT);
             generatedRoutFile(iRouteRoot);
         }

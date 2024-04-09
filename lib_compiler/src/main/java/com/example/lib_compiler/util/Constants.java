@@ -13,7 +13,6 @@ public class Constants {
     private static final String FACADE_PACKAGE = "com.example.lib_router_core";
     private static final String TEMPLATE_PACKAGE = ".template";
 
-
     public static final String KEY_MODULE_NAME = "ROUTER_MODULE_NAME";
 
     public static final String KEY_MODULE_GRAPH_NAME = "ROUTER_MODULE_GRAPH_NAME";
@@ -32,7 +31,7 @@ public class Constants {
     public static final String SUFFIX_ROOT = "Root";
     public static final String SUFFIX_INTERCEPTOR = "Interceptor";
     public static final String METHOD_LOAD_INTO = "loadInto";
-    public static final String MAIN_MODULE_ROUTER_GRAPH_NAME = "nav_graph";
+    public static final String MAIN_MODULE_ROUTER_GRAPH_NAME = "all_graph";
     public static final String PACKAGE_OF_GENERATE_FILE = "com.example.lib_compiler.routes";
     public static final String NAME_OF_ROOT = PROJECT + SEPARATOR + SUFFIX_ROOT + SEPARATOR;
     public static final String NAME_OF_INTERCEPTOR = PROJECT + SEPARATOR + SUFFIX_INTERCEPTOR + SEPARATOR;

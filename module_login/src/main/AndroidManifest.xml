@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name="com.example.common.base.BaseApplication"
+        android:name="debug.LoginApplication"
         android:allowBackup="true"
-        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:icon="@mipmap/ic_launcher"
         android:label="login"
         android:roundIcon="@mipmap/ic_launcher_round"

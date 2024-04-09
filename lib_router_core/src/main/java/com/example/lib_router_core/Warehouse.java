@@ -18,6 +18,11 @@ import java.util.Map;
 public class Warehouse {
     // Cache route and metas
     public static Map<String, RouteMeta> routes = new HashMap<>();
+
+    public static Map<String, RouteMeta> get() {
+        return routes;
+    }
+
     public static Map<String, Integer> destinationMap = new HashMap<>();
     public static Map<Class<?>, IProvider> providerMap = new HashMap<>();
 

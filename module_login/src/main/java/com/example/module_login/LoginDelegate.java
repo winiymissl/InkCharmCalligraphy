@@ -1,7 +1,11 @@
 package com.example.module_login;
 
 
+import android.util.Log;
+
 import com.example.common.base.IApplicationDelegate;
+import com.example.common.base.ViewManager;
+import com.example.module_login.ui.login.LoginFragment;
 
 /**
  * @Author winiymissl
@@ -11,7 +15,8 @@ import com.example.common.base.IApplicationDelegate;
 public class LoginDelegate implements IApplicationDelegate {
     @Override
     public void onCreate() {
-        
+        Log.d("世界是一个bug", "MineDelegate");
+        ViewManager.getInstance().addFragment(new LoginFragment());
     }
 
     @Override

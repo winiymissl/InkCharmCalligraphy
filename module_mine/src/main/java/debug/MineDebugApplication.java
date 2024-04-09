@@ -1,7 +1,7 @@
 package debug;
 
-import com.example.common.base.BaseApplication;
-import com.example.lib_router_core.template.Router;
+import android.app.Application;
+import android.util.Log;
 
 /**
  * @Author winiymissl
@@ -9,11 +9,10 @@ import com.example.lib_router_core.template.Router;
  * @Version 1.0
  * @Description 用于测试时的初始化
  */
-public class MineDebugApplication extends BaseApplication {
+public class MineDebugApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Router.DEBUG(true);
-        Router.init(this);
+        Log.d("世界是一个bug", "初始化完成");
     }
 }
