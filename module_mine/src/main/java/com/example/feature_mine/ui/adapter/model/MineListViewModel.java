@@ -45,13 +45,16 @@ public class MineListViewModel {
 
     static int[] icons = new int[]{
             com.example.common.R.drawable.ic_setting,
-
+            com.example.common.R.drawable.logout,
     };
     static String[] titles = new String[]{
-            "设置"
+            "设置",
+            "退出登录"
     };
     static int[] nexts = new int[]{
             com.example.common.R.drawable.ic_right,
+            com.example.common.R.drawable.ic_right,
+
     };
 
     public static List<MineListViewModel> getData() {

@@ -15,6 +15,10 @@ public class Event<T> {
         this.data = data;
     }
 
+    public Event(int code) {
+        this.code = code;
+    }
+
     public int getCode() {
         return code;
     }

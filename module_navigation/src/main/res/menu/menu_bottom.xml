@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/character_graph"
+        android:icon="@drawable/ic_character"
+        android:title="Character"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/community_graph"
         android:icon="@drawable/ic_community"
         android:title="Community"
@@ -12,4 +17,5 @@
         android:icon="@drawable/ic_mine"
         android:title="Mine"
         app:showAsAction="always" />
+
 </menu>

@@ -11,11 +11,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.common.base.BaseApplication;
 import com.example.common.base.BaseViewModel;
 import com.example.common.dagger.AppComponent;
+import com.example.module_login.R;
 import com.example.module_login.dagger.DaggerLoginComponent;
 import com.example.module_login.data.Repository;
-import com.example.module_login.data.model.LoginUserResult;
+import com.example.module_login.data.model.result.LoginUserResult;
 import com.example.module_login.ui.login.LoginFormState;
-import com.example.module_login.R;
 
 import javax.inject.Inject;
 
@@ -24,6 +24,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginViewModel extends BaseViewModel {
+    private MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>();
+
+    public LiveData<Throwable> getThrowableMutableLiveData() {
+        return throwableMutableLiveData;
+    }
 
     private final CompositeDisposable disposable = new CompositeDisposable();
 
@@ -63,9 +68,10 @@ public class LoginViewModel extends BaseViewModel {
                 .subscribe(
                         loginUserResult -> loginResult.setValue(loginUserResult),
                         throwable -> {
-                            Log.d("世界是一个bug", throwable.toString());
+                            Log.d("世界是一个bug", "login : " + throwable.toString());
                             throwableMutableLiveData.setValue(throwable);
                         });
+
     }
 
     public void loginDataChanged(String email, String password) {

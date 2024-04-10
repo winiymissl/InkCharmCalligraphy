@@ -1,7 +1,6 @@
 package com.example.module_navigation;
 
-import android.app.Application;
-
+import com.example.common.base.BaseApplication;
 import com.example.feature_mine.dao.MineModuleRoomAccessor;
 import com.example.feature_mine.dao.UserInfoDao;
 import com.example.module_navigation.db.DBHelper;
@@ -12,7 +11,7 @@ import com.example.module_navigation.db.DBHelper;
  * @Date 2024-04-08 20:05
  * @Version 1.0
  */
-public class DebugApplication extends Application {
+public class DebugApplication extends BaseApplication {
     private static DebugApplication application;
 
     public static DebugApplication getApplication() {
@@ -22,6 +21,7 @@ public class DebugApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         application = this;
         MineModuleRoomAccessor.setOnGetDaoCallback(new MineModuleRoomAccessor.OnGetDaoCallback() {
             @Override

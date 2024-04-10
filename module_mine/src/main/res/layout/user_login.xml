@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView
-                shapeImageUrl="@{item.data.backgroundImage}"
+                shapeImageUrl="@{item.data.background_image}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -36,7 +36,7 @@
                 app:shapeAppearance="@style/RoundedStyle" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                shapeImageUrl="@{item.data.avatarBackground}"
+                shapeImageUrl="@{item.data.avatar_background}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="50dp"
@@ -97,7 +97,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@{String.valueOf(item.data.postCount)}" />
+                        android:text="@{String.valueOf(item.data.post_count)}" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
@@ -130,7 +130,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@{String.valueOf(item.data.followCount)}" />
+                        android:text="@{String.valueOf(item.data.follow_count)}" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
@@ -162,7 +162,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@{String.valueOf(item.data.fansCount)}" />
+                        android:text="@{String.valueOf(item.data.fans_count)}" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
@@ -195,7 +195,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@{String.valueOf(item.data.likeCount)}" />
+                        android:text="@{String.valueOf(item.data.like_count)}" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
@@ -227,7 +227,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@{String.valueOf(item.data.pointCount)}" />
+                        android:text="@{String.valueOf(item.data.point_count)}" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
@@ -281,7 +281,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:gravity="center"
-                        android:text="积分" />
+                        android:text="收藏" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.cardview.widget.CardView>

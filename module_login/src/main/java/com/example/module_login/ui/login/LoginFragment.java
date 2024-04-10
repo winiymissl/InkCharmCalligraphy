@@ -1,5 +1,6 @@
 package com.example.module_login.ui.login;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -20,10 +22,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.transition.Explode;
 
 import com.example.common.base.BaseFragment;
+import com.example.common.base.MyMMkv;
+import com.example.common.eventbus.Event;
+import com.example.common.eventbus.EventBusUtils;
+import com.example.common.eventbus.EventCode;
 import com.example.module_login.R;
 import com.example.module_login.databinding.FragmentLoginBinding;
 import com.example.module_login.ui.login.viewmodel.LoginViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
@@ -34,12 +41,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-//        setSharedElementEnterTransition(TransitionInflater.from(requireContext()).inflateTransition(R.transition.transition_fragment));
-//        setSharedElementReturnTransition(TransitionInflater.from(requireContext()).inflateTransition(R.transition.transition_fragment));
         setEnterTransition(new Explode());
         setExitTransition(new Explode());
-
-
         return binding.getRoot();
     }
 
@@ -78,8 +81,12 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
             if (throwable == null) {
                 return;
             }
-            tryAgain();
+            Log.d("世界是一个bug", "test");
+            binding.loading.setVisibility(View.GONE);
+            tryAgain(throwable.toString());
         });
+
+
         loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), loginUserResult -> {
             if (loginUserResult == null) {
                 return;
@@ -87,6 +94,16 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
             loadingProgressBar.setVisibility(View.GONE);
             if (loginUserResult.getCode() == 200) {
                 Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
+                /*
+                 * 给mineFragment发信息，让mineFragment刷新数据
+                 * */
+                MyMMkv.getMyDefaultMMkv().encode("token", loginUserResult.getData().getAccess_token());
+                Log.d("世界是一个bug", loginUserResult.getData().getAccess_token());
+                EventBusUtils.sendEvent(new Event<>(EventCode.LoginSuccess));
+                /*
+                 * 保存token
+                 * */
+                getActivity().supportFinishAfterTransition();
             } else {
                 Toast.makeText(getActivity(), "登录失败", Toast.LENGTH_SHORT).show();
             }
@@ -139,8 +156,17 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
         });
     }
 
-    private void tryAgain() {
+    private void tryAgain(String message) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+        builder.setTitle("提示").setMessage(message);
+        builder.setNeutralButton("close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

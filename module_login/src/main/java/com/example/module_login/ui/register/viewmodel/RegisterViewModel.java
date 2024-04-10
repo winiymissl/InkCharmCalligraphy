@@ -14,8 +14,8 @@ import com.example.common.dagger.AppComponent;
 import com.example.module_login.R;
 import com.example.module_login.dagger.DaggerLoginComponent;
 import com.example.module_login.data.Repository;
-import com.example.module_login.data.model.CodeResult;
-import com.example.module_login.data.model.RegisterUserResult;
+import com.example.module_login.data.model.result.CodeResult;
+import com.example.module_login.data.model.result.RegisterUserResult;
 import com.example.module_login.ui.register.RegisterFormState;
 
 import javax.inject.Inject;
@@ -24,6 +24,11 @@ public class RegisterViewModel extends BaseViewModel {
     private MutableLiveData<RegisterFormState> registerFormStateMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<RegisterUserResult> registerResultMutableLiveData = new MutableLiveData<>();
 
+    private MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>();
+
+    public LiveData<Throwable> getThrowableMutableLiveData() {
+        return throwableMutableLiveData;
+    }
 
     private MutableLiveData<CodeResult> code = new MutableLiveData<>();
 
@@ -72,7 +77,7 @@ public class RegisterViewModel extends BaseViewModel {
                             registerResultMutableLiveData.setValue(registerUserResult);
                         },
                         throwable -> {
-                            Log.d("世界是一个bug", throwable.toString());
+                            Log.d("世界是一个bug", "register   :  " + throwable.toString());
                             throwableMutableLiveData.setValue(throwable);
                         });
     }

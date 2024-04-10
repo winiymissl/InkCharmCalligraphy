@@ -1,5 +1,8 @@
 package com.example.feature_mine.data;
 
+import com.example.common.base.BaseApplication;
+import com.example.common.dagger.AppComponent;
+import com.example.feature_mine.dagger.DaggerMineComponent;
 import com.example.feature_mine.dagger.net.MineAPI;
 import com.example.feature_mine.data.model.UserInfoResult;
 
@@ -21,8 +24,11 @@ public class RemoteDataSource {
     @Inject
     public RemoteDataSource(MineAPI loginAPI) {
         this.api = loginAPI;
+        AppComponent appComponent = BaseApplication.getAppComponent();
+        DaggerMineComponent.builder().appComponent(appComponent).build().injectTo(this);
     }
-    public Observable<UserInfoResult> getUserInfo() {
-        return api.getUserinfo().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+
+    public Observable<UserInfoResult> getUserInfo(String token) {
+        return api.getUserinfo("Bearer " + token).subscribeOn(Schedulers.io());
     }
 }

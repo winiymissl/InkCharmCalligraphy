@@ -17,7 +17,7 @@ public class DBHelper {
     private static final String TAG = "DBHelper";
     private static final String DB_PREFIX = "my_app_info";
 
-    private static final AppDataBase dataBase = Room.databaseBuilder(DebugApplication.getApplication(), AppDataBase.class, DB_PREFIX)
+    private static final AppDataBase dataBase = Room.databaseBuilder(DebugApplication.getApplication().getApplicationContext(), AppDataBase.class, DB_PREFIX)
             .addCallback(new RoomDatabase.Callback() {
                 @Override
                 public void onCreate(SupportSQLiteDatabase db) {
@@ -32,7 +32,7 @@ public class DBHelper {
                 }
             })
             .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
+//            .allowMainThreadQueries()
             .build();
 
     public static AppDataBase getDb() {

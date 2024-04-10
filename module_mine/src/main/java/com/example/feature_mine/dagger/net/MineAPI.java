@@ -4,6 +4,7 @@ import com.example.feature_mine.data.model.UserInfoResult;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 
 /**
  * @Author winiymissl
@@ -11,6 +12,6 @@ import retrofit2.http.GET;
  * @Version 1.0
  */
 public interface MineAPI {
-    @GET("/api/user/userinfo")
-    Observable<UserInfoResult> getUserinfo();
+    @GET("/user/userinfo")
+    Observable<UserInfoResult> getUserinfo(@Header("Authorization") String token);
 }

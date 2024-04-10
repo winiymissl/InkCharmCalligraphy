@@ -1,7 +1,5 @@
 package com.example.feature_mine;
 
-import android.util.Log;
-
 import com.example.common.base.IApplicationDelegate;
 import com.example.common.base.ViewManager;
 import com.example.feature_mine.ui.MineFragment;
@@ -17,7 +15,7 @@ public class MineDelegate implements IApplicationDelegate {
         /*
          * 添加到ViewManager
          * */
-        Log.d("世界是一个bug", "MineDelegate");
+//        Log.d("世界是一个bug", "MineDelegate");
         ViewManager.getInstance().addFragment(MineFragment.newInstance());
     }
 

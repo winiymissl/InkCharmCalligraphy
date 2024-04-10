@@ -4,12 +4,12 @@ import com.example.common.base.BaseApplication;
 import com.example.common.dagger.AppComponent;
 import com.example.module_login.dagger.DaggerLoginComponent;
 import com.example.module_login.dagger.net.LoginAPI;
-import com.example.module_login.data.model.CodeRequest;
-import com.example.module_login.data.model.CodeResult;
-import com.example.module_login.data.model.LoginUserRequest;
-import com.example.module_login.data.model.LoginUserResult;
-import com.example.module_login.data.model.RegisterUserRequest;
-import com.example.module_login.data.model.RegisterUserResult;
+import com.example.module_login.data.model.request.CodeRequest;
+import com.example.module_login.data.model.result.CodeResult;
+import com.example.module_login.data.model.request.LoginUserRequest;
+import com.example.module_login.data.model.result.LoginUserResult;
+import com.example.module_login.data.model.request.RegisterUserRequest;
+import com.example.module_login.data.model.result.RegisterUserResult;
 
 import javax.inject.Inject;
 
@@ -37,7 +37,9 @@ public class RemoteDataSource {
     public Observable<LoginUserResult> login(LoginUserRequest request) {
         Observable<LoginUserResult> login = null;
         try {
-            login = loginAPI.login(request);
+            login = loginAPI.login(request)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -1,15 +1,16 @@
 package com.example.module_login.data;
 
-import com.example.module_login.data.model.CodeRequest;
-import com.example.module_login.data.model.CodeResult;
-import com.example.module_login.data.model.LoginUserRequest;
-import com.example.module_login.data.model.LoginUserResult;
-import com.example.module_login.data.model.RegisterUserRequest;
-import com.example.module_login.data.model.RegisterUserResult;
+import com.example.module_login.data.model.request.CodeRequest;
+import com.example.module_login.data.model.result.CodeResult;
+import com.example.module_login.data.model.request.LoginUserRequest;
+import com.example.module_login.data.model.result.LoginUserResult;
+import com.example.module_login.data.model.request.RegisterUserRequest;
+import com.example.module_login.data.model.result.RegisterUserResult;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * Class that requests authentication and user information from the remote data source and

@@ -8,9 +8,6 @@ package com.example.feature_mine.dao;
 public class MineModuleRoomAccessor {
     private static OnGetDaoCallback onGetDaoCallback;
 
-    public static OnGetDaoCallback getOnGetDaoCallback() {
-        return onGetDaoCallback;
-    }
 
     public static void setOnGetDaoCallback(OnGetDaoCallback onGetDaoCallback) {
         MineModuleRoomAccessor.onGetDaoCallback = onGetDaoCallback;

@@ -115,6 +115,7 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding> {
             if (throwable == null) {
                 return;
             }
+            binding.loading.setVisibility(View.GONE);
             tryAgain();
         });
         mViewModel.getRegisterResultMutableLiveData().observe(getViewLifecycleOwner(), registerResult -> {

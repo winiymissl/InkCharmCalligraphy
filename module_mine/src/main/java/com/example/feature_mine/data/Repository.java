@@ -18,7 +18,11 @@ public class Repository {
         this.localDataSource = localDataSource;
     }
 
-    public void getUserInfo() {
+    public RemoteDataSource getRemoteDataSource() {
+        return remoteDataSource;
+    }
 
+    public LocalDataSource getLocalDataSource() {
+        return localDataSource;
     }
 }

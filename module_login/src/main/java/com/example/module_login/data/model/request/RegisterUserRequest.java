@@ -1,4 +1,4 @@
-package com.example.module_login.data.model;
+package com.example.module_login.data.model.request;
 
 /**
  * @Author winiymissl

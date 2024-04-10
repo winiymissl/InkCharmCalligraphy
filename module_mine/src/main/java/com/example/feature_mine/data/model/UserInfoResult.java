@@ -1,7 +1,5 @@
 package com.example.feature_mine.data.model;
 
-import androidx.room.Entity;
-
 import com.example.common.base.BaseResult;
 
 import java.io.Serializable;
@@ -20,25 +18,58 @@ public class UserInfoResult extends BaseResult implements Serializable {
         return data;
     }
 
+    public UserInfoResult(DataDTO dataDTO) {
+        super();
+    }
+
+
     public void setData(DataDTO data) {
         this.data = data;
     }
 
     public static class DataDTO implements Serializable {
-        public Integer getId() {
+        public DataDTO(Integer id, String nickName, String account, String email, String avatarBackground, String backgroundImage, String phone, Integer postCount, Integer followCount, Integer fansCount, Integer likeCount, Integer pointCount) {
+            this.id = id;
+            this.nick_name = nickName;
+            this.account = account;
+            this.email = email;
+            this.avatar_background = avatarBackground;
+            this.background_image = backgroundImage;
+            this.phone = phone;
+            this.post_count = postCount;
+            this.follow_count = followCount;
+            this.fans_count = fansCount;
+            this.like_count = likeCount;
+            this.point_count = pointCount;
+        }
+
+        private int id;
+        private String nick_name;
+        private String account;
+        private String email;
+        private String avatar_background;
+        private String background_image;
+        private String phone;
+        private int post_count;
+        private int follow_count;
+        private int fans_count;
+        private int like_count;
+        private int point_count;
+
+        public int getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(int id) {
             this.id = id;
         }
 
-        public String getNickName() {
-            return nickName;
+        public String getNick_name() {
+            return nick_name;
         }
 
-        public void setNickName(String nickName) {
-            this.nickName = nickName;
+        public void setNick_name(String nick_name) {
+            this.nick_name = nick_name;
         }
 
         public String getAccount() {
@@ -57,20 +88,20 @@ public class UserInfoResult extends BaseResult implements Serializable {
             this.email = email;
         }
 
-        public String getAvatarBackground() {
-            return avatarBackground;
+        public String getAvatar_background() {
+            return avatar_background;
         }
 
-        public void setAvatarBackground(String avatarBackground) {
-            this.avatarBackground = avatarBackground;
+        public void setAvatar_background(String avatar_background) {
+            this.avatar_background = avatar_background;
         }
 
-        public String getBackgroundImage() {
-            return backgroundImage;
+        public String getBackground_image() {
+            return background_image;
         }
 
-        public void setBackgroundImage(String backgroundImage) {
-            this.backgroundImage = backgroundImage;
+        public void setBackground_image(String background_image) {
+            this.background_image = background_image;
         }
 
         public String getPhone() {
@@ -81,57 +112,44 @@ public class UserInfoResult extends BaseResult implements Serializable {
             this.phone = phone;
         }
 
-        public Integer getPostCount() {
-            return postCount;
+        public int getPost_count() {
+            return post_count;
         }
 
-        public void setPostCount(Integer postCount) {
-            this.postCount = postCount;
+        public void setPost_count(int post_count) {
+            this.post_count = post_count;
         }
 
-        public Integer getFollowCount() {
-            return followCount;
+        public int getFollow_count() {
+            return follow_count;
         }
 
-        public void setFollowCount(Integer followCount) {
-            this.followCount = followCount;
+        public void setFollow_count(int follow_count) {
+            this.follow_count = follow_count;
         }
 
-        public Integer getFansCount() {
-            return fansCount;
+        public int getFans_count() {
+            return fans_count;
         }
 
-        public void setFansCount(Integer fansCount) {
-            this.fansCount = fansCount;
+        public void setFans_count(int fans_count) {
+            this.fans_count = fans_count;
         }
 
-        public Integer getLikeCount() {
-            return likeCount;
+        public int getLike_count() {
+            return like_count;
         }
 
-        public void setLikeCount(Integer likeCount) {
-            this.likeCount = likeCount;
+        public void setLike_count(int like_count) {
+            this.like_count = like_count;
         }
 
-        public Integer getPointCount() {
-            return pointCount;
+        public int getPoint_count() {
+            return point_count;
         }
 
-        public void setPointCount(Integer pointCount) {
-            this.pointCount = pointCount;
+        public void setPoint_count(int point_count) {
+            this.point_count = point_count;
         }
-
-        private Integer id;
-        private String nickName;
-        private String account;
-        private String email;
-        private String avatarBackground;
-        private String backgroundImage;
-        private String phone;
-        private Integer postCount;
-        private Integer followCount;
-        private Integer fansCount;
-        private Integer likeCount;
-        private Integer pointCount;
     }
 }

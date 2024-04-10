@@ -10,6 +10,7 @@ import com.example.feature_mine.dao.model.UserInfo;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 /**
@@ -20,13 +21,14 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 public interface UserInfoDao {
     @Insert
-    Single<Integer> insert(UserInfo user);
+    Completable insert(UserInfo user);
 
     @Delete
-    Single<Integer> delete(UserInfo user);
+    Completable delete(List<UserInfo> user);
 
     @Update
-    Single<Integer> update(UserInfo user);
+    Completable update(UserInfo user);
+
 
     @Query("SELECT * FROM userInfo")
     Single<List<UserInfo>> getAllUsers();

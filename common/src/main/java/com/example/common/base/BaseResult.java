@@ -6,8 +6,8 @@ package com.example.common.base;
  * @Version 1.0
  */
 public class BaseResult {
-    Integer code;
-    String message;
+    protected int code;
+    protected String message;
 
     @Override
     public String toString() {

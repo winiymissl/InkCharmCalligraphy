@@ -41,6 +41,9 @@ dependencies {
 //    implementation(project(':lib_annotation'))
 //    implementation(project(':lib_router_core'))
 
+    annotationProcessor "androidx.room:room-compiler:2.6.1"
+    api "androidx.room:room-rxjava3:2.6.1"
+
     implementation 'androidx.preference:preference:1.2.1'
     implementation project(path: ':module_login')
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.51.1'

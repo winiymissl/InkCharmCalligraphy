@@ -9,6 +9,8 @@ import com.tencent.mmkv.MMKV;
  */
 public class MyMMkv {
     public static MMKV getMyDefaultMMkv() {
+        MMKV.initialize(BaseApplication.getInstance());
         return MMKV.defaultMMKV();
     }
+
 }

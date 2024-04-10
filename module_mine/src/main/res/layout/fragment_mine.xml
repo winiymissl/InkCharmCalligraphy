@@ -9,6 +9,11 @@
             name="item"
             type="com.example.feature_mine.data.model.UserInfoResult" />
     </data>
+<com.scwang.smart.refresh.layout.SmartRefreshLayout
+    android:id="@+id/smart_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,4 +33,5 @@
             android:layout_height="match_parent"
             android:visibility="@{item == null ? View.VISIBLE : View.GONE}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </layout>

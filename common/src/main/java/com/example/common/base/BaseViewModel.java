@@ -18,16 +18,14 @@ public class BaseViewModel extends AndroidViewModel {
     /*
      * 有一个报错的MutableLiveData
      * */
-    protected MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>();
+
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
         init();
     }
 
-    public LiveData<Throwable> getThrowableMutableLiveData() {
-        return throwableMutableLiveData;
-    }
+
 
     protected AppComponent getAppComponent() {
         return BaseApplication.getAppComponent();
