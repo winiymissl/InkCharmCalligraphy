@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.transition.Explode;
 
 import com.example.common.base.BaseFragment;
 import com.example.module_community.databinding.FragmentCommunityBinding;
+import com.example.module_community.ui.adapter.RecyclerviewCommunityAdapter;
+import com.example.module_community.ui.adapter.model.CommunityItem;
 import com.example.module_community.ui.viewmodel.CommunityViewModel;
 
 public class CommunityFragment extends BaseFragment<FragmentCommunityBinding> {
@@ -32,5 +35,9 @@ public class CommunityFragment extends BaseFragment<FragmentCommunityBinding> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        RecyclerviewCommunityAdapter adapter = new RecyclerviewCommunityAdapter();
+        adapter.setData(CommunityItem.getCommunityItem());
+        binding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        binding.recyclerView.setAdapter(adapter);
     }
 }

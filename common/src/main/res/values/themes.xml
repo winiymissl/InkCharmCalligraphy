@@ -61,6 +61,12 @@
         <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">1000</item>
     </style>
 
+    <style name="RoundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">90dp</item> <!-- 圆角半径 -->
+    </style>
+
+
     <style name="RoundedStyle">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>

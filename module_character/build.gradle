@@ -42,11 +42,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
 
-
 //    implementation(project(':lib_compiler'))
 //    implementation(project(':lib_annotation'))
 //    implementation(project(':lib_router_core'))
 
+    api 'androidx.appcompat:appcompat:1.6.1'
+    api 'com.google.android.material:material:1.11.0'
 
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.51.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.51.1'

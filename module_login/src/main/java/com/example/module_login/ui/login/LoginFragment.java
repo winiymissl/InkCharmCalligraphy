@@ -32,6 +32,7 @@ import com.example.module_login.ui.login.viewmodel.LoginViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.transition.MaterialFade;
 
 public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
 
@@ -85,7 +86,11 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
             binding.loading.setVisibility(View.GONE);
             tryAgain(throwable.toString());
         });
-
+//        Glide.with(getActivity())
+//                .load(com.example.common.R.drawable.ic_background) // 图像的 URL 或资源 ID
+//                .apply(RequestOptions.bitmapTransform(new BlurTransformation(20)))
+//
+//                .into(binding.imageView); // 显示图像的 ImageView
 
         loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), loginUserResult -> {
             if (loginUserResult == null) {
