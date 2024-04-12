@@ -29,11 +29,18 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MineViewModel extends BaseViewModel {
     private MutableLiveData<UserInfoResult> userInfoResult = new MutableLiveData<>();
-    private MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>(new Throwable("nothing"));
 
     private MutableLiveData<ChangeUserInfoResult> changeUserInfoResultMutableLiveData = new MutableLiveData<>();
 
+    private MutableLiveData<String> nameMutableLiveData = new MutableLiveData<>();
+
     private MutableLiveData<InputFormState> inputFormState = new MutableLiveData<>();
+
+    public LiveData<String> getNameMutableLiveData() {
+        return nameMutableLiveData;
+    }
+
 
     public LiveData<Throwable> getThrowableMutableLiveData() {
         return throwableMutableLiveData;
@@ -47,7 +54,7 @@ public class MineViewModel extends BaseViewModel {
         return inputFormState;
     }
 
-    public void dataChange(String nickName) {
+    public void inputDataChange(String nickName) {
         if (isNickNameValid(nickName)) {
             inputFormState.setValue(new InputFormState("昵称不可用", false));
         } else {
@@ -91,79 +98,63 @@ public class MineViewModel extends BaseViewModel {
         return userInfoResult;
     }
 
-    public void changeUserInfo(String token, String name, String phone) {
+    @SuppressLint("CheckResult")
+    public void changeUserInfoRemote(String token, String name, String phone) {
         if (token != null) {
-            repository.getRemoteDataSource().changeUserInfo(token, name, phone)
-                    .subscribe(changeUserInfoResult -> {
-                        changeUserInfoResultMutableLiveData.postValue(changeUserInfoResult);
-                    }, error -> {
-                        throwableMutableLiveData.setValue(error);
-                    });
+            repository.getRemoteDataSource().changeUserInfo(token, name, phone).subscribe(changeUserInfoResult -> {
+                changeUserInfoResultMutableLiveData.postValue(changeUserInfoResult);
+            }, error -> {
+                throwableMutableLiveData.postValue(error);
+            });
         }
     }
 
+
+    @SuppressLint("CheckResult")
     public void changeUserInfoRemote(String token, String name) {
         if (token != null) {
-            repository.getRemoteDataSource().changeUserInfo(token, name)
-                    .subscribe(changeUserInfoResult -> {
-                        changeUserInfoResultMutableLiveData.postValue(changeUserInfoResult);
+            repository.getRemoteDataSource().changeUserInfo(token, name).subscribe(changeUserInfoResult -> {
+                Log.d("世界是一个bug", changeUserInfoResult.toString());
+                changeUserInfoResultMutableLiveData.postValue(changeUserInfoResult);
+            }, error -> {
+                Log.d("世界是一个bug", error.toString());
+                throwableMutableLiveData.postValue(error);
+            });
+        }
+    }
+
+    @SuppressLint("CheckResult")
+
+    public void changeUserInfoLocal(String nickName, String phone) {
+        if (nickName != null) {
+            repository.getLocalDataSource().queryUserInfo(nickName).subscribeOn(Schedulers.io()).subscribe(userInfo -> {
+                repository.getLocalDataSource().updateUserInfo(new UserInfo(userInfo.getId_user(), nickName, userInfo.getAccount(), userInfo.getEmail(), userInfo.getAvatarBackground(),
+                        userInfo.getBackgroundImage(),
+                        phone, userInfo.getPostCount(), userInfo.getFollowCount(), userInfo.getFansCount(), userInfo.getLikeCount(), userInfo.getPointCount()));
+            });
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    public void changeUserInfoLocal(String nickName) {
+        if (nickName != null) {
+            repository.getLocalDataSource().getUserInfoList().subscribeOn(Schedulers.io()).subscribe(userInfo -> {
+                UserInfo info = new UserInfo(nickName, userInfo.get(0).getId_user(), userInfo.get(0).getAccount(), userInfo.get(0).getEmail(), userInfo.get(0).getAvatarBackground(), userInfo.get(0).getBackgroundImage(), userInfo.get(0).getPhone(), userInfo.get(0).getPostCount(), userInfo.get(0).getFollowCount(), userInfo.get(0).getFansCount(), userInfo.get(0).getLikeCount(), userInfo.get(0).getPointCount());
+                repository.getLocalDataSource().deleteUserInfo(userInfo).subscribe(() -> {
+                    repository.getLocalDataSource().insertUserInfo(info).subscribe(() -> {
+                        nameMutableLiveData.postValue("change");
                     }, error -> {
-                        throwableMutableLiveData.setValue(error);
+                        throwableMutableLiveData.postValue(error);
+                        Log.d("世界是一个bug", "updateUserInfo    ：  " + error.toString());
                     });
-        }
-    }
+                }, error -> {
+                    throwableMutableLiveData.postValue(error);
+                });
 
-    public void updateUserInfoLocal(String nickName, String phone) {
-        if (nickName != null) {
-            repository.getLocalDataSource().queryUserInfo(nickName)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(userInfo -> {
-                        repository.getLocalDataSource().updateUserInfo(new UserInfo(
-                                userInfo.getId_user(),
-                                nickName,
-                                userInfo.getAccount(),
-                                userInfo.getEmail(),
-                                userInfo.getAvatarBackground(),
-                                userInfo.getBackgroundImage(),
-                                phone,
-                                userInfo.getPostCount(),
-                                userInfo.getFollowCount(),
-                                userInfo.getFansCount(),
-                                userInfo.getLikeCount(),
-                                userInfo.getPointCount()
-                        ));
-                    });
-
-        }
-    }
-
-    public void updateUserInfoLocal(String nickName) {
-        if (nickName != null) {
-            repository.getLocalDataSource().queryUserInfo(nickName)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(userInfo -> {
-                                repository.getLocalDataSource().updateUserInfo(new UserInfo(
-                                        userInfo.getId_user(),
-                                        nickName,
-                                        userInfo.getAccount(),
-                                        userInfo.getEmail(),
-                                        userInfo.getAvatarBackground(),
-                                        userInfo.getBackgroundImage(),
-                                        userInfo.getPhone(),
-                                        userInfo.getPostCount(),
-                                        userInfo.getFollowCount(),
-                                        userInfo.getFansCount(),
-                                        userInfo.getLikeCount(),
-                                        userInfo.getPointCount()
-                                )).subscribe(() -> {
-
-                                }, error -> {
-                                    throwableMutableLiveData.setValue(error);
-                                });
-                            }
-                            , error -> {
-                                throwableMutableLiveData.setValue(error);
-                            });
+            }, error -> {
+                throwableMutableLiveData.postValue(error);
+                Log.d("世界是一个bug", "updateUserInfo    ：  " + error.toString());
+            });
         }
     }
 
@@ -172,12 +163,11 @@ public class MineViewModel extends BaseViewModel {
         repository.getLocalDataSource().getUserInfoList().subscribe(userInfoList -> {
             if (userInfoList.size() > 0) {
                 userInfoResult.postValue(dbInfoConvertToUser(userInfoList.get(0)));
-//                Log.d("世界是一个bug", "fetchUserInfoLocalData    ：  " + userInfoList.get(0).toString());
             } else {
                 userInfoResult.postValue(null);
             }
         }, error -> {
-            throwableMutableLiveData.setValue(error);
+            throwableMutableLiveData.postValue(error);
             Toast.makeText(getApplication(), "本地数据库申请数据失败", Toast.LENGTH_SHORT).show();
             Log.d("世界是一个bug", "fetchUserInfoLocalData    ：  " + error.toString());
         });
@@ -187,18 +177,19 @@ public class MineViewModel extends BaseViewModel {
     public void fetchUserInfoRemoteData(String token) {
         if (token != null) {
             repository.getRemoteDataSource().getUserInfo(token).subscribe(result -> {
-                userInfoResult.postValue(result);
-                repository.getLocalDataSource().insertUserInfo(userInfoConvertToDb(result)).subscribe(() -> {
-//                    Log.d("世界是一个bug", "insertUserInfo ： " + "插入成功");
-
+                repository.getLocalDataSource().getUserInfoList().subscribe(result_query -> {
+                    userInfoResult.postValue(result);
+                    if (result_query.isEmpty()) {
+                        repository.getLocalDataSource().insertUserInfo(userInfoConvertToDb(result)).subscribe(() -> {
+                        }, error -> {
+                            throwableMutableLiveData.postValue(error);
+                        });
+                    }
                 }, error -> {
-                    Log.d("世界是一个bug", "insertUserInfo ： " + error.toString());
-                    Toast.makeText(getApplication(), "本地数据库插入失败", Toast.LENGTH_SHORT).show();
+                    throwableMutableLiveData.postValue(error);
                 });
             }, error -> {
-                throwableMutableLiveData.setValue(error);
-                Log.d("世界是一个bug", "fetchUserInfoRemoteData ： " + error.toString());
-                Toast.makeText(getApplication(), "网络申请数据失败", Toast.LENGTH_SHORT).show();
+                throwableMutableLiveData.postValue(error);
             });
         }
     }
@@ -209,7 +200,6 @@ public class MineViewModel extends BaseViewModel {
         repository.getLocalDataSource().getUserInfoList().subscribeOn(Schedulers.io())
                 .subscribe(result -> {
                     repository.getLocalDataSource().deleteUserInfo(result).subscribe(() -> {
-//                        Log.d("世界是一个bug", "deleteAllUserInfo ： " + "插入成功");
                         userInfoResult.postValue(null);
                     }, error -> {
                         Log.d("世界是一个bug", "deleteAllUserInfo ： " + error.toString());
@@ -220,8 +210,7 @@ public class MineViewModel extends BaseViewModel {
     }
 
     private UserInfoResult dbInfoConvertToUser(UserInfo userInfoList) {
-        UserInfoResult result = new UserInfoResult(new UserInfoResult.DataDTO(Integer.valueOf(userInfoList.getId_user()), userInfoList.getNickName(), userInfoList.getAccount(), userInfoList.getEmail(), userInfoList.getAvatarBackground(), userInfoList.getBackgroundImage(), userInfoList.getPhone(), Integer.valueOf(userInfoList.getPostCount()), Integer.valueOf(userInfoList.getFollowCount()), Integer.valueOf(userInfoList.getFansCount()), Integer.valueOf(userInfoList.getLikeCount()), Integer.valueOf(userInfoList.getPointCount())));
-        return result;
+        return new UserInfoResult(new UserInfoResult.DataDTO(Integer.valueOf(userInfoList.getId_user()), userInfoList.getNickName(), userInfoList.getAccount(), userInfoList.getEmail(), userInfoList.getAvatarBackground(), userInfoList.getBackgroundImage(), userInfoList.getPhone(), Integer.valueOf(userInfoList.getPostCount()), Integer.valueOf(userInfoList.getFollowCount()), Integer.valueOf(userInfoList.getFansCount()), Integer.valueOf(userInfoList.getLikeCount()), Integer.valueOf(userInfoList.getPointCount())));
     }
 
     private UserInfo userInfoConvertToDb(UserInfoResult userInfo) {

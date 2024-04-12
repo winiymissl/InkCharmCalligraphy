@@ -50,8 +50,12 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
     @Subscribe
     public void onMessageEvent(Event event) {
         // 处理收到的事件
-        if (EventCode.LoginSuccess == event.getCode()) {
+        if (EventCode.LOGIN_SUCCESS == event.getCode()) {
             mViewModel.fetchUserInfoRemoteData(MyMMkv.getMyDefaultMMkv().getString("token", null));
+        }
+        if (EventCode.MORE_INFO == event.getCode()) {
+            Log.d("世界是一个bug", "onMessageEvent: " + event.getData());
+            mViewModel.fetchUserInfoLocalData();
         }
     }
 
@@ -110,12 +114,12 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                     Log.d("世界是一个bug", MyMMkv.getMyDefaultMMkv().getString("token", null));
                     mViewModel.fetchUserInfoRemoteData(MyMMkv.getMyDefaultMMkv().getString("token", null));
                 } else {
-                    binding.smartRefreshLayout.finishRefresh();
                     Toast.makeText(mActivity, "token == null", Toast.LENGTH_SHORT).show();
                 }
+                binding.smartRefreshLayout.finishRefresh();
             }
         });
-        
+
         binding.includeNotLogin.buttonToLogin.setOnClickListener(v -> {
             try {
                 Class clazz = Class.forName("com.example.module_login.ui.LoginActivity");
@@ -127,7 +131,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
         });
         binding.includeLogin.shapeableImageViewBackgroundImage.setOnClickListener(v -> {
             /*
-             * 导航到DiologFragment
+             * 导航到DialogFragment
              * */
             navController.navigate(R.id.modalBottomSheet);
         });

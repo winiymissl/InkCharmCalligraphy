@@ -9,5 +9,13 @@
         android:id="@+id/communityFragment"
         android:name="com.example.module_community.ui.CommunityFragment"
         android:label="fragment_community"
-        tools:layout="@layout/fragment_community"></fragment>
+        tools:layout="@layout/fragment_community">
+        <action
+            android:id="@+id/action_communityFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/communityDetailFragment"
+        android:name="com.example.module_community.ui.CommunityDetailFragment"
+        android:label="CommunityDetailFragment" />
 </navigation>

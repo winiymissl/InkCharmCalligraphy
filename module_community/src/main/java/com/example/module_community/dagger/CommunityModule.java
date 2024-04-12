@@ -2,9 +2,8 @@ package com.example.module_community.dagger;
 
 import com.example.common.dagger.PreActivity;
 import com.example.module_community.dagger.net.CommunityAPI;
-import com.example.module_community.dao.Repository;
-import com.example.module_community.data.LocalDataSource;
 import com.example.module_community.data.RemoteDataSource;
+import com.example.module_community.data.Repository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,8 +18,8 @@ import retrofit2.Retrofit;
 public class CommunityModule {
     @PreActivity
     @Provides
-    Repository provideRepository(RemoteDataSource remoteDataSource, LocalDataSource localDataSource) {
-        return new Repository(remoteDataSource, localDataSource);
+    Repository provideRepository(RemoteDataSource remoteDataSource) {
+        return new Repository(remoteDataSource);
     }
 
     @PreActivity

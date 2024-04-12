@@ -32,7 +32,6 @@ import com.example.module_login.ui.login.viewmodel.LoginViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.transition.MaterialFade;
 
 public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
 
@@ -104,7 +103,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
                  * */
                 MyMMkv.getMyDefaultMMkv().encode("token", loginUserResult.getData().getAccess_token());
                 Log.d("世界是一个bug", loginUserResult.getData().getAccess_token());
-                EventBusUtils.sendEvent(new Event<>(EventCode.LoginSuccess));
+                EventBusUtils.sendEvent(new Event<>(EventCode.LOGIN_SUCCESS));
                 /*
                  * 保存token
                  * */

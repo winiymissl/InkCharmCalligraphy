@@ -174,15 +174,28 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/loading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="gone"
+        <FrameLayout
+            android:id="@+id/loadingOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="48dp"
+                android:layout_marginRight="48dp"
+                android:indeterminate="true"
+                app:trackCornerRadius="10dp" />
+
+        </FrameLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -2,7 +2,6 @@ package com.example.module_navigation;
 
 import com.example.common.base.BaseApplication;
 import com.example.feature_mine.dao.MineModuleRoomAccessor;
-import com.example.module_community.dao.CommunityModuleRoomAccessor;
 import com.example.module_navigation.db.DBHelper;
 
 
@@ -23,6 +22,5 @@ public class DebugApplication extends BaseApplication {
         super.onCreate();
         application = this;
         MineModuleRoomAccessor.setOnGetDaoCallback(() -> DBHelper.getDb().UserInfoDao());
-        CommunityModuleRoomAccessor.setOnGetDaoCallback(() -> DBHelper.getDb().CommunityInfoDao());
     }
 }

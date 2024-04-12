@@ -35,4 +35,5 @@ public interface UserInfoDao {
 
     @Query("SELECT * FROM userInfo WHERE nickName = :nickName")
     Single<UserInfo> getUser(String nickName);
+
 }

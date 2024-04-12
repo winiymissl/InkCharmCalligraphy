@@ -42,4 +42,5 @@ public class LocalDataSource {
     public Single<UserInfo> queryUserInfo(String nickname) {
         return MineModuleRoomAccessor.getUserDao().getUser(nickname);
     }
+
 }

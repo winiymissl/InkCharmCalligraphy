@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-
+        android:name="debug.DebugApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name="debug.ModuleCommunityActivity"

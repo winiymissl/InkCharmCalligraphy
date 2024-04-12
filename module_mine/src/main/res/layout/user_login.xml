@@ -71,6 +71,7 @@
                     app:srcCompat="@drawable/right" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/nick_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="120dp"

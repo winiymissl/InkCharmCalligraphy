@@ -24,7 +24,7 @@
     <dialog
         android:id="@+id/modalBottomSheet"
         android:name="com.example.feature_mine.ui.bottomsheetfragment.ModalBottomSheet"
-        android:label="ModalBottomSheet" >
+        android:label="ModalBottomSheet">
         <action
             android:id="@+id/action_modalBottomSheet_to_moreInfoFragment"
             app:destination="@id/moreInfoFragment" />
@@ -32,6 +32,14 @@
     <fragment
         android:id="@+id/moreInfoFragment"
         android:name="com.example.feature_mine.ui.MoreInfoFragment"
-        android:label="MoreInfoFragment" />
+        android:label="MoreInfoFragment">
+        <action
+            android:id="@+id/action_moreInfoFragment_to_nickNameFragment"
+            app:destination="@id/nickNameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nickNameFragment"
+        android:name="com.example.feature_mine.ui.NickNameFragment"
+        android:label="NickNameFragment" />
 
 </navigation>

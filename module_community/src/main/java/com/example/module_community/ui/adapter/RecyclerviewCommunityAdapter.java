@@ -55,9 +55,10 @@ public class RecyclerviewCommunityAdapter extends RecyclerView.Adapter {
         }
 
         private void setData(CommunityItem item) {
-            binding.shapeableImageView.setImageResource(item.getImage());
-            binding.textViewContent.setText(item.getContent());
-            binding.textViewName.setText("来自  " + item.getName());
+
+//            binding.shapeableImageView.setImageResource(item.getImage());
+//            binding.textViewContent.setText(item.getContent());
+//            binding.textViewName.setText("来自  " + item.getName());
         }
     }
 }

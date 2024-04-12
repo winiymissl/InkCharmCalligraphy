@@ -1,9 +1,11 @@
 package com.example.module_community.dagger.net;
 
-import com.example.module_community.data.model.CommunityInfoResult;
+import com.example.module_community.data.model.request.CommunityInfoRequest;
+import com.example.module_community.data.model.result.CommunityInfoResult;
 
 import io.reactivex.rxjava3.core.Observable;
-import retrofit2.http.GET;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 /**
  * @Author winiymissl
@@ -12,7 +14,7 @@ import retrofit2.http.GET;
  */
 public interface CommunityAPI {
 
-    @GET("/look/allposts")
-    Observable<CommunityInfoResult> getPosts();
+    @POST("/community/look/allposts")
+    Observable<CommunityInfoResult> getPosts(@Body CommunityInfoRequest request);
 
 }

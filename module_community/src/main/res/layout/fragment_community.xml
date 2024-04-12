@@ -11,26 +11,26 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_community">
+        app:menu="@menu/menu_community" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="热门" />
-        </com.google.android.material.tabs.TabLayout>
-
-    </com.google.android.material.appbar.MaterialToolbar>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refreshLayout_community"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.849"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_community"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
