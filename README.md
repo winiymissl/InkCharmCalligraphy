@@ -2,7 +2,13 @@
 
 使用mvvm架构，整体项目使用组件化搭建，livedata+viewmodel+navigation+rxjava+retrofit+databinding+dagger2
 
+目标：
+
 - [ ] 阿里的ARouter针对Navigation框架做个路由库
+- [ ] webView使用多进程，避免内存泄漏
+- [ ] 定义RemoteView
+- [ ] 完善提示功能
+- [ ] 比赛模块
 - [x] 在compiler中自定义Logger 
 - [x] 封装了网络请求框架，net模块
 - [x] 本地数据库采用Room，高度低耦合，在上层提供接口
