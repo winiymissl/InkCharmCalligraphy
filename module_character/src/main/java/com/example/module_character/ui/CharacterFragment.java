@@ -54,14 +54,14 @@ public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
         binding.carouselRecyclerViewHistory.setLayoutManager(new CarouselLayoutManager(new HeroCarouselStrategy()));
         binding.carouselRecyclerViewHistory.setAdapter(adapter);
 
-        RecyclerviewAdapter adapter_recommond = new RecyclerviewAdapter();
-        List<Integer> list_recommond = new ArrayList<>();
-        list_recommond.add(com.example.common.R.drawable.ic_shoujin_history);
-        list_recommond.add(com.example.common.R.drawable.ic_caoshu);
-        list_recommond.add(com.example.common.R.drawable.ic_caoshu_recommand);
-        adapter_recommond.setData(list_recommond);
+        RecyclerviewAdapter adapter_recommand = new RecyclerviewAdapter();
+        List<Integer> list_recommand = new ArrayList<>();
+        list_recommand.add(com.example.common.R.drawable.ic_shoujin_history);
+        list_recommand.add(com.example.common.R.drawable.ic_caoshu);
+        list_recommand.add(com.example.common.R.drawable.ic_caoshu_recommand);
+        adapter_recommand.setData(list_recommand);
         binding.carouselRecyclerViewRecommond.setLayoutManager(new CarouselLayoutManager(new MultiBrowseCarouselStrategy()));
-        binding.carouselRecyclerViewRecommond.setAdapter(adapter_recommond);
+        binding.carouselRecyclerViewRecommond.setAdapter(adapter_recommand);
 
         binding.textViewScore.setOnClickListener(v -> {
             try {

@@ -4,65 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="item"
-            type="com.example.feature_mine.data.model.UserInfoResult" />
+            type="com.example.feature_mine.data.model.result.UserInfoResult" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.feature_mine.ui.MineFragment">
-
+        android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_margin="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                shapeImageUrl="@{item.data.background_image}"
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                style="@style/ThemeOverlay.Material3.BottomSheetDialog"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_samples"
-                app:shapeAppearance="@style/RoundedStyle" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                shapeImageUrl="@{item.data.avatar_background}"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="40dp"
-                android:scaleType="centerCrop"
-                app:shapeAppearance="@style/RoundedStyle"
-                app:srcCompat="@drawable/ic_avatar" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="80dp"
-                android:layout_marginEnd="16dp"
-                app:srcCompat="@drawable/right" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="60dp"
-                android:text="nickname"
-                android:textColor="@color/white"
-                android:textSize="18dp" />
-
+                android:layout_height="400dp" />
         </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.example.feature_mine.ui.MineFragment">
+
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/shapeableImageView_background_image"
+                    shapeImageUrl="@{item.data.background_image}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_samples"
+                    app:shapeAppearance="@style/RoundedStyle" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    shapeImageUrl="@{item.data.avatar_background}"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearance="@style/RoundedStyle"
+                    app:srcCompat="@drawable/ic_avatar" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageView_more_info"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginEnd="16dp"
+                    app:srcCompat="@drawable/right" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginTop="60dp"
+                    android:text="@{item.data.nick_name}"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
+            </FrameLayout>
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -400,5 +417,6 @@
                 android:layout_height="wrap_content" />
         </com.google.android.material.card.MaterialCardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -3,6 +3,7 @@ package com.example.module_character.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,13 @@ public class ScoreFragment extends BaseFragment<FragmentScoreBinding> {
         super.onViewCreated(view, savedInstanceState);
         binding.imageviewbutn.setOnClickListener(v -> {
             // 在按钮点击事件处理程序中添加以下代码
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            takePictureIntent.setType("image/*");
-            startActivityForResult(takePictureIntent, 1);
+            try {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                takePictureIntent.setType("image/*");
+                startActivityForResult(takePictureIntent, 1);
+            } catch (Exception e) {
+                Log.d("世界是一个bug", e.toString());
+            }
         });
     }
 }

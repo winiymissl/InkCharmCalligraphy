@@ -12,6 +12,24 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "userInfo")
 public class UserInfo {
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "ID=" + ID +
+                ", nickName='" + nickName + '\'' +
+                ", id_user='" + id_user + '\'' +
+                ", account='" + account + '\'' +
+                ", email='" + email + '\'' +
+                ", avatarBackground='" + avatarBackground + '\'' +
+                ", backgroundImage='" + backgroundImage + '\'' +
+                ", phone='" + phone + '\'' +
+                ", postCount='" + postCount + '\'' +
+                ", followCount='" + followCount + '\'' +
+                ", fansCount='" + fansCount + '\'' +
+                ", likeCount='" + likeCount + '\'' +
+                ", pointCount='" + pointCount + '\'' +
+                '}';
+    }
 
     public UserInfo(String nickName,
                     String id_user,

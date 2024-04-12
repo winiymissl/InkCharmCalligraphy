@@ -23,7 +23,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter {
 
     public void setData(List<Integer> list) {
         this.list = list;
-        Log.d("世界是一个bug", "运行到 list ");
+//        Log.d("世界是一个bug", "运行到 list ");
         notifyDataSetChanged();
     }
 
@@ -50,7 +50,6 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter {
         }
 
         void bind(Integer integer) {
-            Log.d("世界是一个bug", "运行到 Glide ");
 //            binding.carouselImageView.setImageResource(com.example.common.R.drawable.ic_shufa2);
             Glide.with(binding.getRoot()).load(integer).into(binding.carouselImageView);
         }

@@ -13,10 +13,25 @@
         <action
             android:id="@+id/action_fragment_mineDestination_mine_fragment_to_settingsFragment"
             app:destination="@id/fragment_mineDestination_setting_fragment" />
+        <action
+            android:id="@+id/action_fragment_mineDestination_mine_fragment_to_modalBottomSheet"
+            app:destination="@id/modalBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/fragment_mineDestination_setting_fragment"
         android:name="com.example.feature_mine.ui.SettingsFragment"
         android:label="SettingsFragment" />
+    <dialog
+        android:id="@+id/modalBottomSheet"
+        android:name="com.example.feature_mine.ui.bottomsheetfragment.ModalBottomSheet"
+        android:label="ModalBottomSheet" >
+        <action
+            android:id="@+id/action_modalBottomSheet_to_moreInfoFragment"
+            app:destination="@id/moreInfoFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/moreInfoFragment"
+        android:name="com.example.feature_mine.ui.MoreInfoFragment"
+        android:label="MoreInfoFragment" />
 
 </navigation>

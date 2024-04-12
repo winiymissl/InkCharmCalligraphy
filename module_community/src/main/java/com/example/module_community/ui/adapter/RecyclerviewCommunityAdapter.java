@@ -42,7 +42,7 @@ public class RecyclerviewCommunityAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list == null ? 0 : list.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -57,7 +57,7 @@ public class RecyclerviewCommunityAdapter extends RecyclerView.Adapter {
         private void setData(CommunityItem item) {
             binding.shapeableImageView.setImageResource(item.getImage());
             binding.textViewContent.setText(item.getContent());
-            binding.textViewName.setText(item.getName());
+            binding.textViewName.setText("来自  " + item.getName());
         }
     }
 }

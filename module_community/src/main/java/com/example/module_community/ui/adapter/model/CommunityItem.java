@@ -23,17 +23,19 @@ public class CommunityItem {
             com.example.common.R.drawable.ic_caoshu,
             com.example.common.R.drawable.ic_caoshu_recommand,
             com.example.common.R.drawable.ic_shoujin_history,
-
+            com.example.common.R.drawable.ic_shufa_xinian,
     };
     static String[] names = new String[]{
             "山房",
             "不染",
             "游龙",
+            "驹君"
     };
     static String[] contents = new String[]{
-            "著名草书作品",
+            "一幅优秀的书法作品应该具有端庄大气的风采，独特的个性和鲜明的艺术风格。评价书法作品需要审美眼光和文化修养，同时也需要欣赏者对艺术家的用心与情感有所感悟",
             "这个草书很有水准",
             "无敌的瘦金体",
+            "我的信念",
     };
 
     public static List<CommunityItem> getCommunityItem() {

@@ -26,10 +26,13 @@ public interface UserInfoDao {
     @Delete
     Completable delete(List<UserInfo> user);
 
-    @Update
+    @Update()
     Completable update(UserInfo user);
 
 
     @Query("SELECT * FROM userInfo")
     Single<List<UserInfo>> getAllUsers();
+
+    @Query("SELECT * FROM userInfo WHERE nickName = :nickName")
+    Single<UserInfo> getUser(String nickName);
 }

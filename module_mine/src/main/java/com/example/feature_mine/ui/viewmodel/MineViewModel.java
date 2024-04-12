@@ -16,17 +16,54 @@ import com.example.common.dagger.AppComponent;
 import com.example.feature_mine.dagger.DaggerMineComponent;
 import com.example.feature_mine.dao.model.UserInfo;
 import com.example.feature_mine.data.Repository;
-import com.example.feature_mine.data.model.UserInfoResult;
+import com.example.feature_mine.data.model.result.ChangeUserInfoResult;
+import com.example.feature_mine.data.model.result.UserInfoResult;
+import com.example.feature_mine.ui.formstate.InputFormState;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MineViewModel extends BaseViewModel {
+    private MutableLiveData<UserInfoResult> userInfoResult = new MutableLiveData<>();
     private MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<ChangeUserInfoResult> changeUserInfoResultMutableLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<InputFormState> inputFormState = new MutableLiveData<>();
 
     public LiveData<Throwable> getThrowableMutableLiveData() {
         return throwableMutableLiveData;
+    }
+
+    public LiveData<ChangeUserInfoResult> getChangeUserInfoResultMutableLiveData() {
+        return changeUserInfoResultMutableLiveData;
+    }
+
+    public LiveData<InputFormState> getInputFormState() {
+        return inputFormState;
+    }
+
+    public void dataChange(String nickName) {
+        if (isNickNameValid(nickName)) {
+            inputFormState.setValue(new InputFormState("昵称不可用", false));
+        } else {
+            inputFormState.setValue(new InputFormState(true));
+        }
+    }
+
+    private boolean isNickNameValid(String nickName) {
+        String regex = "\\s";
+
+        // 编译正则表达式
+        Pattern pattern = Pattern.compile(regex);
+
+        // 创建 Matcher 对象，并在输入字符串上执行匹配
+        Matcher matcher = pattern.matcher(nickName);
+        return matcher.find();
     }
 
     @Inject
@@ -43,7 +80,6 @@ public class MineViewModel extends BaseViewModel {
         DaggerMineComponent.builder().appComponent(appComponent).build().injectTo(this);
     }
 
-    private MutableLiveData<UserInfoResult> userInfoResult = new MutableLiveData<>();
 
     public LiveData<UserInfoResult> getUserInfoResult() {
         if (userInfoResult.getValue() == null) {
@@ -55,13 +91,90 @@ public class MineViewModel extends BaseViewModel {
         return userInfoResult;
     }
 
+    public void changeUserInfo(String token, String name, String phone) {
+        if (token != null) {
+            repository.getRemoteDataSource().changeUserInfo(token, name, phone)
+                    .subscribe(changeUserInfoResult -> {
+                        changeUserInfoResultMutableLiveData.postValue(changeUserInfoResult);
+                    }, error -> {
+                        throwableMutableLiveData.setValue(error);
+                    });
+        }
+    }
+
+    public void changeUserInfoRemote(String token, String name) {
+        if (token != null) {
+            repository.getRemoteDataSource().changeUserInfo(token, name)
+                    .subscribe(changeUserInfoResult -> {
+                        changeUserInfoResultMutableLiveData.postValue(changeUserInfoResult);
+                    }, error -> {
+                        throwableMutableLiveData.setValue(error);
+                    });
+        }
+    }
+
+    public void updateUserInfoLocal(String nickName, String phone) {
+        if (nickName != null) {
+            repository.getLocalDataSource().queryUserInfo(nickName)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(userInfo -> {
+                        repository.getLocalDataSource().updateUserInfo(new UserInfo(
+                                userInfo.getId_user(),
+                                nickName,
+                                userInfo.getAccount(),
+                                userInfo.getEmail(),
+                                userInfo.getAvatarBackground(),
+                                userInfo.getBackgroundImage(),
+                                phone,
+                                userInfo.getPostCount(),
+                                userInfo.getFollowCount(),
+                                userInfo.getFansCount(),
+                                userInfo.getLikeCount(),
+                                userInfo.getPointCount()
+                        ));
+                    });
+
+        }
+    }
+
+    public void updateUserInfoLocal(String nickName) {
+        if (nickName != null) {
+            repository.getLocalDataSource().queryUserInfo(nickName)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(userInfo -> {
+                                repository.getLocalDataSource().updateUserInfo(new UserInfo(
+                                        userInfo.getId_user(),
+                                        nickName,
+                                        userInfo.getAccount(),
+                                        userInfo.getEmail(),
+                                        userInfo.getAvatarBackground(),
+                                        userInfo.getBackgroundImage(),
+                                        userInfo.getPhone(),
+                                        userInfo.getPostCount(),
+                                        userInfo.getFollowCount(),
+                                        userInfo.getFansCount(),
+                                        userInfo.getLikeCount(),
+                                        userInfo.getPointCount()
+                                )).subscribe(() -> {
+
+                                }, error -> {
+                                    throwableMutableLiveData.setValue(error);
+                                });
+                            }
+                            , error -> {
+                                throwableMutableLiveData.setValue(error);
+                            });
+        }
+    }
+
     @SuppressLint("CheckResult")
     public void fetchUserInfoLocalData() {
         repository.getLocalDataSource().getUserInfoList().subscribe(userInfoList -> {
             if (userInfoList.size() > 0) {
-                userInfoResult.setValue(dbInfoConvertToUser(userInfoList.get(0)));
+                userInfoResult.postValue(dbInfoConvertToUser(userInfoList.get(0)));
+//                Log.d("世界是一个bug", "fetchUserInfoLocalData    ：  " + userInfoList.get(0).toString());
             } else {
-                userInfoResult.setValue(null);
+                userInfoResult.postValue(null);
             }
         }, error -> {
             throwableMutableLiveData.setValue(error);
@@ -76,9 +189,11 @@ public class MineViewModel extends BaseViewModel {
             repository.getRemoteDataSource().getUserInfo(token).subscribe(result -> {
                 userInfoResult.postValue(result);
                 repository.getLocalDataSource().insertUserInfo(userInfoConvertToDb(result)).subscribe(() -> {
-                    Log.d("世界是一个bug", "insertUserInfo ： " + "插入成功");
+//                    Log.d("世界是一个bug", "insertUserInfo ： " + "插入成功");
+
                 }, error -> {
                     Log.d("世界是一个bug", "insertUserInfo ： " + error.toString());
+                    Toast.makeText(getApplication(), "本地数据库插入失败", Toast.LENGTH_SHORT).show();
                 });
             }, error -> {
                 throwableMutableLiveData.setValue(error);
@@ -91,10 +206,10 @@ public class MineViewModel extends BaseViewModel {
     @SuppressLint("CheckResult")
     public void delUserInfo() {
         MyMMkv.getMyDefaultMMkv().remove("token");
-        repository.getLocalDataSource().queryUserInfo().subscribeOn(Schedulers.io())
+        repository.getLocalDataSource().getUserInfoList().subscribeOn(Schedulers.io())
                 .subscribe(result -> {
-                    repository.getLocalDataSource().deleteUserInfo(result).subscribeOn(Schedulers.io()).subscribe(() -> {
-                        Log.d("世界是一个bug", "deleteAllUserInfo ： " + "插入成功");
+                    repository.getLocalDataSource().deleteUserInfo(result).subscribe(() -> {
+//                        Log.d("世界是一个bug", "deleteAllUserInfo ： " + "插入成功");
                         userInfoResult.postValue(null);
                     }, error -> {
                         Log.d("世界是一个bug", "deleteAllUserInfo ： " + error.toString());

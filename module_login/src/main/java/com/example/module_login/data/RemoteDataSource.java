@@ -5,10 +5,10 @@ import com.example.common.dagger.AppComponent;
 import com.example.module_login.dagger.DaggerLoginComponent;
 import com.example.module_login.dagger.net.LoginAPI;
 import com.example.module_login.data.model.request.CodeRequest;
-import com.example.module_login.data.model.result.CodeResult;
 import com.example.module_login.data.model.request.LoginUserRequest;
-import com.example.module_login.data.model.result.LoginUserResult;
 import com.example.module_login.data.model.request.RegisterUserRequest;
+import com.example.module_login.data.model.result.CodeResult;
+import com.example.module_login.data.model.result.LoginUserResult;
 import com.example.module_login.data.model.result.RegisterUserResult;
 
 import javax.inject.Inject;
@@ -25,8 +25,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class RemoteDataSource {
     @Inject
     LoginAPI loginAPI;
-
-
+    
     @Inject
     public RemoteDataSource(LoginAPI loginAPI) {
         this.loginAPI = loginAPI;

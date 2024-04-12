@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.example.feature_mine.ui.adapter.model.MineListViewModel;
+import com.example.feature_mine.ui.adapter.model.MineListViewEntity;
 import com.example.module_mine.R;
 import com.example.module_mine.databinding.ItemMineBinding;
 
@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class MineListVIewAdapter extends BaseAdapter {
 
-    public MineListVIewAdapter(List<MineListViewModel> mineList) {
+    public MineListVIewAdapter(List<MineListViewEntity> mineList) {
         mMineList = mineList;
     }
 
-    List<MineListViewModel> mMineList;
+    List<MineListViewEntity> mMineList;
 
     @Override
     public int getCount() {

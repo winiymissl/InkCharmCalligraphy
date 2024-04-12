@@ -8,12 +8,12 @@ import java.util.List;
  * @Date 2024-04-05 17:40
  * @Version 1.0
  */
-public class MineListViewModel {
+public class MineListViewEntity {
     int icon;
     String title;
     int next;
 
-    public MineListViewModel(int icon, String title, int next) {
+    public MineListViewEntity(int icon, String title, int next) {
         this.icon = icon;
         this.title = title;
         this.next = next;
@@ -57,10 +57,10 @@ public class MineListViewModel {
 
     };
 
-    public static List<MineListViewModel> getData() {
-        List<MineListViewModel> list = new ArrayList<>();
+    public static List<MineListViewEntity> getData() {
+        List<MineListViewEntity> list = new ArrayList<>();
         for (int i = 0; i < icons.length; i++) {
-            list.add(new MineListViewModel(icons[i], titles[i], nexts[i]));
+            list.add(new MineListViewEntity(icons[i], titles[i], nexts[i]));
         }
         return list;
     }

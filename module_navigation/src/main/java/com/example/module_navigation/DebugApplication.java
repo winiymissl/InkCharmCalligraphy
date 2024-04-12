@@ -2,7 +2,7 @@ package com.example.module_navigation;
 
 import com.example.common.base.BaseApplication;
 import com.example.feature_mine.dao.MineModuleRoomAccessor;
-import com.example.feature_mine.dao.UserInfoDao;
+import com.example.module_community.dao.CommunityModuleRoomAccessor;
 import com.example.module_navigation.db.DBHelper;
 
 
@@ -21,13 +21,8 @@ public class DebugApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
         application = this;
-        MineModuleRoomAccessor.setOnGetDaoCallback(new MineModuleRoomAccessor.OnGetDaoCallback() {
-            @Override
-            public UserInfoDao onGetUserDao() {
-                return DBHelper.getDb().UserInfoDao();
-            }
-        });
+        MineModuleRoomAccessor.setOnGetDaoCallback(() -> DBHelper.getDb().UserInfoDao());
+        CommunityModuleRoomAccessor.setOnGetDaoCallback(() -> DBHelper.getDb().CommunityInfoDao());
     }
 }

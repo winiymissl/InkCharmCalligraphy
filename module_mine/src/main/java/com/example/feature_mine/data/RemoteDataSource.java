@@ -4,11 +4,12 @@ import com.example.common.base.BaseApplication;
 import com.example.common.dagger.AppComponent;
 import com.example.feature_mine.dagger.DaggerMineComponent;
 import com.example.feature_mine.dagger.net.MineAPI;
-import com.example.feature_mine.data.model.UserInfoResult;
+import com.example.feature_mine.data.model.request.ChangeUserInfoRequest;
+import com.example.feature_mine.data.model.result.ChangeUserInfoResult;
+import com.example.feature_mine.data.model.result.UserInfoResult;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -30,5 +31,13 @@ public class RemoteDataSource {
 
     public Observable<UserInfoResult> getUserInfo(String token) {
         return api.getUserinfo("Bearer " + token).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<ChangeUserInfoResult> changeUserInfo(String token, String nick_name, String phone) {
+        return api.changeUserInfo("Bearer " + token, new ChangeUserInfoRequest(nick_name, phone)).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<ChangeUserInfoResult> changeUserInfo(String token, String nick_name) {
+        return api.changeUserInfo("Bearer " + token, new ChangeUserInfoRequest(nick_name)).subscribeOn(Schedulers.io());
     }
 }

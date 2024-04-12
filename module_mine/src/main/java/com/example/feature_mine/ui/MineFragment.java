@@ -23,7 +23,7 @@ import com.example.common.eventbus.BindEventBus;
 import com.example.common.eventbus.Event;
 import com.example.common.eventbus.EventCode;
 import com.example.feature_mine.ui.adapter.MineListVIewAdapter;
-import com.example.feature_mine.ui.adapter.model.MineListViewModel;
+import com.example.feature_mine.ui.adapter.model.MineListViewEntity;
 import com.example.feature_mine.ui.viewmodel.MineViewModel;
 import com.example.module_mine.R;
 import com.example.module_mine.databinding.FragmentMineBinding;
@@ -71,7 +71,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MineViewModel.class);
-        MineListVIewAdapter adapter = new MineListVIewAdapter(MineListViewModel.getData());
+        MineListVIewAdapter adapter = new MineListVIewAdapter(MineListViewEntity.getData());
         NavController navController = NavHostFragment.findNavController(this);
         binding.includeLogin.listViewMine.setAdapter(adapter);
         binding.includeLogin.listViewMine.setOnItemClickListener((parent, view1, position, id) -> {
@@ -115,7 +115,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 }
             }
         });
-
+        
         binding.includeNotLogin.buttonToLogin.setOnClickListener(v -> {
             try {
                 Class clazz = Class.forName("com.example.module_login.ui.LoginActivity");
@@ -125,11 +125,19 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 Log.d("世界是一个bug", e.toString());
             }
         });
+        binding.includeLogin.shapeableImageViewBackgroundImage.setOnClickListener(v -> {
+            /*
+             * 导航到DiologFragment
+             * */
+            navController.navigate(R.id.modalBottomSheet);
+        });
         mViewModel.getUserInfoResult().observe(getViewLifecycleOwner(), userInfoResult -> {
             /*
              * 通过dataBinding，将数据设置到页面，会因为是否为空，而设置到页面上
              * */
+//            Log.d("世界是一个bug", " getUserInfoResult in mineFragment " + userInfoResult.toString());
             binding.setItem(userInfoResult);
+            binding.includeLogin.setItem(userInfoResult);
         });
         mViewModel.getThrowableMutableLiveData().observe(getViewLifecycleOwner(), throwable -> {
             if (throwable == null) {

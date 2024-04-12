@@ -1,10 +1,14 @@
 package com.example.feature_mine.dagger.net;
 
-import com.example.feature_mine.data.model.UserInfoResult;
+import com.example.feature_mine.data.model.request.ChangeUserInfoRequest;
+import com.example.feature_mine.data.model.result.ChangeUserInfoResult;
+import com.example.feature_mine.data.model.result.UserInfoResult;
 
 import io.reactivex.rxjava3.core.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 
 /**
  * @Author winiymissl
@@ -14,4 +18,7 @@ import retrofit2.http.Header;
 public interface MineAPI {
     @GET("/user/userinfo")
     Observable<UserInfoResult> getUserinfo(@Header("Authorization") String token);
+
+    @POST("/user/modinfo")
+    Observable<ChangeUserInfoResult> changeUserInfo(@Header("Authorization") String token, @Body ChangeUserInfoRequest request);
 }

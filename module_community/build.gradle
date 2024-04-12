@@ -44,6 +44,7 @@ dependencies {
 //    implementation(project(':lib_compiler'))
 //    implementation(project(':lib_annotation'))
 //    implementation(project(':lib_router_core'))
+    api "androidx.room:room-rxjava3:2.6.1"
 
     implementation 'androidx.annotation:annotation:1.7.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'

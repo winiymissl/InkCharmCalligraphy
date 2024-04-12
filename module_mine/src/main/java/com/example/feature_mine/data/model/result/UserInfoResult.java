@@ -1,4 +1,4 @@
-package com.example.feature_mine.data.model;
+package com.example.feature_mine.data.model.result;
 
 import com.example.common.base.BaseResult;
 
@@ -20,6 +20,7 @@ public class UserInfoResult extends BaseResult implements Serializable {
 
     public UserInfoResult(DataDTO dataDTO) {
         super();
+        this.data = dataDTO;
     }
 
 
@@ -151,5 +152,30 @@ public class UserInfoResult extends BaseResult implements Serializable {
         public void setPoint_count(int point_count) {
             this.point_count = point_count;
         }
+
+        @Override
+        public String toString() {
+            return "DataDTO{" +
+                    "id=" + id +
+                    ", nick_name='" + nick_name + '\'' +
+                    ", account='" + account + '\'' +
+                    ", email='" + email + '\'' +
+                    ", avatar_background='" + avatar_background + '\'' +
+                    ", background_image='" + background_image + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", post_count=" + post_count +
+                    ", follow_count=" + follow_count +
+                    ", fans_count=" + fans_count +
+                    ", like_count=" + like_count +
+                    ", point_count=" + point_count +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfoResult{" +
+                "data=" + data +
+                '}';
     }
 }
