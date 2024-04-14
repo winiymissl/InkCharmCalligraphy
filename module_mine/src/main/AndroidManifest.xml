@@ -19,5 +19,4 @@ android:name="debug.MineDebugApplication"
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

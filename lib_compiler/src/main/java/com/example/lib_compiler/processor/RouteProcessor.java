@@ -167,7 +167,9 @@ public class RouteProcessor extends AbstractProcessor {
                 logger.info("Route class:" + tm.toString());
                 Route route = element.getAnnotation(Route.class);
                 RouteMeta routeMeta;
-
+                /*
+                 * new出来map里面的实例
+                 * */
                 if (types.isSubtype(tm, typeFragment)) {
                     logger.info(">>> Found fragment route: " + tm.toString() + " <<<");
                     routeMeta = new RouteMeta(RouteMeta.RouteType.FRAGMENT, route, graphName, element);
@@ -182,6 +184,11 @@ public class RouteProcessor extends AbstractProcessor {
                 routeMetaMap.put(routeMeta.getDestinationText(), routeMeta);
             }
             logger.info(">>>     routeMetaMap中总数  :  " + routeMetaMap.size());
+            /**
+             * 拿到需要生成类继承的接口的，类名
+             * eg：
+             *  addSuperinterface(ClassName.get(iRouteRoot))
+             * */
             TypeElement iRouteRoot = elementUtils.getTypeElement(IROUTE_ROOT);
             generatedRoutFile(iRouteRoot);
         }
@@ -217,7 +224,7 @@ public class RouteProcessor extends AbstractProcessor {
         String className = Constants.NAME_OF_ROOT + moduleName;
         TypeSpec typeSpec = TypeSpec.classBuilder(className)
                 /*
-                 * 继承IRoute
+                 * 继承IRoute，生成类的文件
                  * */.addSuperinterface(ClassName.get(iRouteRoot)).addModifiers(Modifier.PUBLIC).addMethod(methodBuilder.build()).build();
         try {
             JavaFile.builder(Constants.PACKAGE_OF_GENERATE_FILE, typeSpec).build().writeTo(filer);
