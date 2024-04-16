@@ -39,26 +39,36 @@ android {
     }
 }
 dependencies {
-    implementation(project(':common'))
 
+    implementation(project(':common'))
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
 //    implementation(project(':lib_compiler'))
 //    implementation(project(':lib_annotation'))
 //    implementation(project(':lib_router_core'))
-    api "androidx.room:room-rxjava3:2.6.1"
 
-    implementation 'androidx.annotation:annotation:1.7.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
-
-    api 'com.google.dagger:dagger-android:2.51.1'
-    api 'com.google.dagger:dagger-android-support:2.51.1'
+    //pagingSource
+//    def paging_version = "3.2.1"
+//
+//    api "androidx.paging:paging-runtime:$paging_version"
+//
+//    // alternatively - without Android dependencies for tests
+//    testImplementation "androidx.paging:paging-common:$paging_version"
+//    // optional - RxJava3 support
+//    api "androidx.paging:paging-rxjava3:$paging_version"
+//
+//    implementation 'androidx.annotation:annotation:1.7.1'
+//    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+//
+//    api 'com.google.dagger:dagger-android:2.51.1'
+//    api 'com.google.dagger:dagger-android-support:2.51.1'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.51.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.51.1'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment:2.7.7'
-    implementation 'androidx.navigation:navigation-ui:2.7.7'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'com.google.android.material:material:1.11.0'
+//    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+//    implementation 'androidx.navigation:navigation-fragment:2.7.7'
+//    implementation 'androidx.navigation:navigation-ui:2.7.7'
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }
 

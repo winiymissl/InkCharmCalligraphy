@@ -3,7 +3,6 @@ package com.example.feature_mine.ui.viewmodel;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -13,6 +12,7 @@ import com.example.common.base.BaseApplication;
 import com.example.common.base.BaseViewModel;
 import com.example.common.base.MyMMkv;
 import com.example.common.dagger.AppComponent;
+import com.example.common.livedata.SingleLiveEvent;
 import com.example.feature_mine.dagger.DaggerMineComponent;
 import com.example.feature_mine.dao.model.UserInfo;
 import com.example.feature_mine.data.Repository;
@@ -29,7 +29,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MineViewModel extends BaseViewModel {
     private MutableLiveData<UserInfoResult> userInfoResult = new MutableLiveData<>();
-    private MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>(new Throwable("nothing"));
+    private SingleLiveEvent<Throwable> throwableMutableLiveData = new SingleLiveEvent<>();
 
     private MutableLiveData<ChangeUserInfoResult> changeUserInfoResultMutableLiveData = new MutableLiveData<>();
 
@@ -40,7 +40,6 @@ public class MineViewModel extends BaseViewModel {
     public LiveData<String> getNameMutableLiveData() {
         return nameMutableLiveData;
     }
-
 
     public LiveData<Throwable> getThrowableMutableLiveData() {
         return throwableMutableLiveData;
@@ -104,6 +103,7 @@ public class MineViewModel extends BaseViewModel {
             repository.getRemoteDataSource().changeUserInfo(token, name, phone).subscribe(changeUserInfoResult -> {
                 changeUserInfoResultMutableLiveData.postValue(changeUserInfoResult);
             }, error -> {
+                Log.d("世界是一个bug", "changeUserInfoRemote    ：  " + error.toString());
                 throwableMutableLiveData.postValue(error);
             });
         }
@@ -149,6 +149,7 @@ public class MineViewModel extends BaseViewModel {
                     });
                 }, error -> {
                     throwableMutableLiveData.postValue(error);
+                    Log.d("世界是一个bug", "deleteUserInfo    ：  " + error.toString());
                 });
 
             }, error -> {
@@ -168,7 +169,7 @@ public class MineViewModel extends BaseViewModel {
             }
         }, error -> {
             throwableMutableLiveData.postValue(error);
-            Toast.makeText(getApplication(), "本地数据库申请数据失败", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplication(), "本地数据库申请数据失败", Toast.LENGTH_SHORT).show();
             Log.d("世界是一个bug", "fetchUserInfoLocalData    ：  " + error.toString());
         });
     }
@@ -182,13 +183,17 @@ public class MineViewModel extends BaseViewModel {
                     if (result_query.isEmpty()) {
                         repository.getLocalDataSource().insertUserInfo(userInfoConvertToDb(result)).subscribe(() -> {
                         }, error -> {
+                            Log.d("世界是一个bug", error.toString());
                             throwableMutableLiveData.postValue(error);
                         });
                     }
                 }, error -> {
+                    Log.d("世界是一个bug", error.toString());
                     throwableMutableLiveData.postValue(error);
                 });
             }, error -> {
+//                Log.d("世界是一个bug", error.toString());
+                Log.d("世界是一个bug", "getRemoteDataSource ： " + error.toString());
                 throwableMutableLiveData.postValue(error);
             });
         }
@@ -197,7 +202,7 @@ public class MineViewModel extends BaseViewModel {
     @SuppressLint("CheckResult")
     public void delUserInfo() {
         MyMMkv.getMyDefaultMMkv().remove("token");
-        repository.getLocalDataSource().getUserInfoList().subscribeOn(Schedulers.io())
+        repository.getLocalDataSource().getUserInfoList()
                 .subscribe(result -> {
                     repository.getLocalDataSource().deleteUserInfo(result).subscribe(() -> {
                         userInfoResult.postValue(null);
@@ -210,10 +215,32 @@ public class MineViewModel extends BaseViewModel {
     }
 
     private UserInfoResult dbInfoConvertToUser(UserInfo userInfoList) {
-        return new UserInfoResult(new UserInfoResult.DataDTO(Integer.valueOf(userInfoList.getId_user()), userInfoList.getNickName(), userInfoList.getAccount(), userInfoList.getEmail(), userInfoList.getAvatarBackground(), userInfoList.getBackgroundImage(), userInfoList.getPhone(), Integer.valueOf(userInfoList.getPostCount()), Integer.valueOf(userInfoList.getFollowCount()), Integer.valueOf(userInfoList.getFansCount()), Integer.valueOf(userInfoList.getLikeCount()), Integer.valueOf(userInfoList.getPointCount())));
+        return new UserInfoResult(new UserInfoResult.DataDTO(Integer.valueOf(userInfoList.getId_user()),
+                userInfoList.getNickName(),
+                userInfoList.getAccount(),
+                userInfoList.getEmail(),
+                userInfoList.getAvatarBackground(),
+                userInfoList.getBackgroundImage(),
+                userInfoList.getPhone(),
+                Integer.valueOf(userInfoList.getPostCount()),
+                Integer.valueOf(userInfoList.getFollowCount()),
+                Integer.valueOf(userInfoList.getFansCount()),
+                Integer.valueOf(userInfoList.getLikeCount()),
+                Integer.valueOf(userInfoList.getPointCount())));
     }
 
     private UserInfo userInfoConvertToDb(UserInfoResult userInfo) {
-        return new UserInfo(userInfo.getData().getNick_name(), String.valueOf(userInfo.getData().getId()), userInfo.getData().getAccount(), userInfo.getData().getEmail(), userInfo.getData().getAvatar_background(), userInfo.getData().getBackground_image(), userInfo.getData().getPhone(), String.valueOf(userInfo.getData().getPost_count()), String.valueOf(userInfo.getData().getFollow_count()), String.valueOf(userInfo.getData().getFans_count()), String.valueOf(userInfo.getData().getLike_count()), String.valueOf(userInfo.getData().getPoint_count()));
+        return new UserInfo(userInfo.getData().getNick_name(),
+                String.valueOf(userInfo.getData().getId()),
+                userInfo.getData().getAccount(),
+                userInfo.getData().getEmail(),
+                userInfo.getData().getAvatar_background(),
+                userInfo.getData().getBackground_image(),
+                userInfo.getData().getPhone(),
+                String.valueOf(userInfo.getData().getPost_count()),
+                String.valueOf(userInfo.getData().getFollow_count()),
+                String.valueOf(userInfo.getData().getFans_count()),
+                String.valueOf(userInfo.getData().getLike_count()),
+                String.valueOf(userInfo.getData().getPoint_count()));
     }
 }

@@ -4,6 +4,7 @@
     android:id="@+id/app_graph"
     app:startDestination="@id/character_graph">
     <include app:graph="@navigation/character_graph" />
-<!--    <include app:graph="@navigation/community_graph" />-->
+    <include app:graph="@navigation/community_graph" />
+    <include app:graph="@navigation/home_graph" />
     <include app:graph="@navigation/mine_graph" />
 </navigation>

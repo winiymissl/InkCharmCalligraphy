@@ -2,10 +2,17 @@ package com.example.module_community.dagger.net;
 
 import com.example.module_community.data.model.request.CommunityInfoRequest;
 import com.example.module_community.data.model.result.CommunityInfoResult;
+import com.example.module_community.data.model.result.PostResult;
 
-import io.reactivex.rxjava3.core.Observable;
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Single;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * @Author winiymissl
@@ -15,6 +22,9 @@ import retrofit2.http.POST;
 public interface CommunityAPI {
 
     @POST("/community/look/allposts")
-    Observable<CommunityInfoResult> getPosts(@Body CommunityInfoRequest request);
+    Single<CommunityInfoResult> getPosts(@Body CommunityInfoRequest request);
 
+    @POST("/community/create/post")
+    @Multipart
+    Single<PostResult> post(@Header("Authorization") String token, @Part("images") List<RequestBody> images, @Part("content") RequestBody content);
 }

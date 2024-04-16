@@ -13,9 +13,24 @@
         <action
             android:id="@+id/action_communityFragment_to_communityDetailFragment"
             app:destination="@id/communityDetailFragment" />
+        <action
+            android:id="@+id/action_communityFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityDetailFragment"
         android:name="com.example.module_community.ui.CommunityDetailFragment"
-        android:label="CommunityDetailFragment" />
+        android:label="CommunityDetailFragment" >
+        <action
+            android:id="@+id/action_communityDetailFragment_to_shareDialogFragment"
+            app:destination="@id/shareDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/shareDialogFragment"
+        android:name="com.example.module_community.ui.dialog.ShareDialogFragment"
+        android:label="ShareDialogFragment" />
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.module_community.ui.CreatePostFragment"
+        android:label="CreatePostFragment" />
 </navigation>

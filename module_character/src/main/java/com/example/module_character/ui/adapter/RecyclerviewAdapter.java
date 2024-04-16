@@ -1,11 +1,11 @@
 package com.example.module_character.ui.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,11 +19,20 @@ import java.util.List;
  * @Date 2024-04-11 0:44ersion 1.0
  */
 public class RecyclerviewAdapter extends RecyclerView.Adapter {
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public OnItemClickListener onItemClickListener;
+
+    public RecyclerviewAdapter(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     List<Integer> list;
 
     public void setData(List<Integer> list) {
         this.list = list;
-//        Log.d("世界是一个bug", "运行到 list ");
         notifyDataSetChanged();
     }
 
@@ -39,9 +48,10 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         myViewHolder.bind(list.get(position));
+        myViewHolder.onClick(position);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private ItemRecyclerviewShufaBinding binding;
 
         public MyViewHolder(@NonNull ItemRecyclerviewShufaBinding binding) {
@@ -50,8 +60,14 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter {
         }
 
         void bind(Integer integer) {
-//            binding.carouselImageView.setImageResource(com.example.common.R.drawable.ic_shufa2);
+            ViewCompat.setTransitionName(binding.carouselImageView,"shared_imageView");
             Glide.with(binding.getRoot()).load(integer).into(binding.carouselImageView);
+        }
+
+        void onClick(int position) {
+            binding.getRoot().setOnClickListener(view -> {
+                onItemClickListener.onItemClick(view, position);
+            });
         }
     }
 

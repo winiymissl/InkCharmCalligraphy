@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.common.base.BaseApplication;
 import com.example.common.base.BaseViewModel;
 import com.example.common.dagger.AppComponent;
+import com.example.common.livedata.SingleLiveEvent;
 import com.example.module_login.R;
 import com.example.module_login.dagger.DaggerLoginComponent;
 import com.example.module_login.data.Repository;
@@ -19,12 +20,10 @@ import com.example.module_login.ui.login.LoginFormState;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginViewModel extends BaseViewModel {
-    private MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>();
+    private SingleLiveEvent<Throwable> throwableMutableLiveData = new SingleLiveEvent<>();
 
     public LiveData<Throwable> getThrowableMutableLiveData() {
         return throwableMutableLiveData;

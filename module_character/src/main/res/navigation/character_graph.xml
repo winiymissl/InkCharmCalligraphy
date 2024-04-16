@@ -11,9 +11,38 @@
         <action
             android:id="@+id/action_characterFragment_to_scoreFragment"
             app:destination="@id/scoreFragment" />
+        <action
+            android:id="@+id/action_characterFragment_to_collectCharacterFragment"
+            app:destination="@id/collectCharacterFragment" />
+        <action
+            android:id="@+id/action_characterFragment_to_historyScoreFragment"
+            app:destination="@id/historyScoreFragment" />
+        <action
+            android:id="@+id/action_characterFragment_to_enterViewFragment"
+            app:destination="@id/enterViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/scoreFragment"
         android:name="com.example.module_character.ui.ScoreFragment"
-        android:label="ScoreFragment" />
+        android:label="ScoreFragment">
+        <action
+            android:id="@+id/action_scoreFragment_to_answerFragment"
+            app:destination="@id/answerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/collectCharacterFragment"
+        android:name="com.example.module_character.ui.CollectCharacterFragment"
+        android:label="CollectCharacterFragment" />
+    <fragment
+        android:id="@+id/answerFragment"
+        android:name="com.example.module_character.ui.AnswerFragment"
+        android:label="AnswerFragment" />
+    <fragment
+        android:id="@+id/historyScoreFragment"
+        android:name="com.example.module_character.ui.HistoryScoreFragment"
+        android:label="HistoryScoreFragment" />
+    <fragment
+        android:id="@+id/enterViewFragment"
+        android:name="com.example.module_character.ui.EnterViewFragment"
+        android:label="EnterViewFragment" />
 </navigation>

@@ -9,9 +9,17 @@ public class CommunityItem {
     String image;
     String name;
     String content;
-
     String user_avatar;
 
+    @Override
+    public String toString() {
+        return "CommunityItem{" +
+                "image='" + image + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", user_avatar='" + user_avatar + '\'' +
+                '}';
+    }
 
     public CommunityItem(String image, String name, String content, String user_avatar) {
         this.image = image;

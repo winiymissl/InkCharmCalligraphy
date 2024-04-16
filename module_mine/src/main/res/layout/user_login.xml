@@ -12,20 +12,9 @@
             type="com.example.feature_mine.data.model.result.UserInfoResult" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                style="@style/ThemeOverlay.Material3.BottomSheetDialog"
-                android:layout_width="match_parent"
-                android:layout_height="400dp" />
-        </FrameLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -419,5 +408,4 @@
         </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

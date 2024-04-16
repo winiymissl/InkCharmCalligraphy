@@ -22,21 +22,41 @@ public class CommunityInfoResult extends BaseResult implements Serializable {
 
     private DataDTO data;
 
+    @Override
+    public String toString() {
+        return "CommunityInfoResult{" +
+                "data=" + data +
+                '}';
+    }
+
     public static class DataDTO implements Serializable {
-        public Integer getCurrentPage() {
-            return currentPage;
+        @Override
+        public String toString() {
+            return "DataDTO{" +
+                    "currentPage=" + current_page +
+                    ", pageSize=" + page_size +
+                    ", offset=" + offset +
+                    ", overflow=" + overflow +
+                    ", totalPage=" + total_page +
+                    ", totalCount=" + total_count +
+                    ", postData=" + post_data +
+                    '}';
         }
 
-        public void setCurrentPage(Integer currentPage) {
-            this.currentPage = currentPage;
+        public Integer getCurrent_page() {
+            return current_page;
         }
 
-        public Integer getPageSize() {
-            return pageSize;
+        public void setCurrent_page(Integer current_page) {
+            this.current_page = current_page;
         }
 
-        public void setPageSize(Integer pageSize) {
-            this.pageSize = pageSize;
+        public Integer getPage_size() {
+            return page_size;
+        }
+
+        public void setPage_size(Integer page_size) {
+            this.page_size = page_size;
         }
 
         public Long getOffset() {
@@ -55,79 +75,95 @@ public class CommunityInfoResult extends BaseResult implements Serializable {
             this.overflow = overflow;
         }
 
-        public Integer getTotalPage() {
-            return totalPage;
+        public Integer getTotal_page() {
+            return total_page;
         }
 
-        public void setTotalPage(Integer totalPage) {
-            this.totalPage = totalPage;
+        public void setTotal_page(Integer total_page) {
+            this.total_page = total_page;
         }
 
-        public Integer getTotalCount() {
-            return totalCount;
+        public Integer getTotal_count() {
+            return total_count;
         }
 
-        public void setTotalCount(Integer totalCount) {
-            this.totalCount = totalCount;
+        public void setTotal_count(Integer total_count) {
+            this.total_count = total_count;
         }
 
-        public List<PostDataDTO> getPostData() {
-            return postData;
+        public List<PostDataDTO> getPost_data() {
+            return post_data;
         }
 
-        public void setPostData(List<PostDataDTO> postData) {
-            this.postData = postData;
+        public void setPost_data(List<PostDataDTO> post_data) {
+            this.post_data = post_data;
         }
 
         public DataDTO(Integer currentPage, Integer pageSize, Long offset, Boolean overflow, Integer totalPage, Integer totalCount, List<PostDataDTO> postData) {
-            this.currentPage = currentPage;
-            this.pageSize = pageSize;
+            this.current_page = currentPage;
+            this.page_size = pageSize;
             this.offset = offset;
             this.overflow = overflow;
-            this.totalPage = totalPage;
-            this.totalCount = totalCount;
-            this.postData = postData;
+            this.total_page = totalPage;
+            this.total_count = totalCount;
+            this.post_data = postData;
         }
 
-        private Integer currentPage;
-        private Integer pageSize;
+        private Integer current_page;
+        private Integer page_size;
         private Long offset;
         private Boolean overflow;
-        private Integer totalPage;
-        private Integer totalCount;
-        private List<PostDataDTO> postData;
+        private Integer total_page;
+        private Integer total_count;
+        private List<PostDataDTO> post_data;
 
         public static class PostDataDTO implements Serializable {
+            @Override
+            public String toString() {
+                return "PostDataDTO{" +
+                        "userInfo=" + user_info +
+                        ", id=" + id +
+                        ", userId=" + userId +
+                        ", contentCount=" + content_count +
+                        ", likeCount=" + like_count +
+                        ", collectCount=" + collect_count +
+                        ", content='" + content + '\'' +
+                        ", createTime=" + create_time +
+                        ", deleteTime=" + delete_time +
+                        ", imageUrls=" + image_urls +
+                        '}';
+            }
+
             public PostDataDTO(UserInfoDTO userInfo, Integer id, Integer userId, Integer contentCount, Integer likeCount, Integer collectCount, String content, Integer createTime, Integer deleteTime, List<String> imageUrls) {
-                this.userInfo = userInfo;
+                this.user_info = userInfo;
                 this.id = id;
                 this.userId = userId;
-                this.contentCount = contentCount;
-                this.likeCount = likeCount;
-                this.collectCount = collectCount;
+                this.content_count = contentCount;
+                this.like_count = likeCount;
+                this.collect_count = collectCount;
                 this.content = content;
-                this.createTime = createTime;
-                this.deleteTime = deleteTime;
-                this.imageUrls = imageUrls;
+                this.create_time = createTime;
+                this.delete_time = deleteTime;
+                this.image_urls = imageUrls;
             }
 
-            private UserInfoDTO userInfo;
+            private UserInfoDTO user_info;
             private Integer id;
             private Integer userId;
-            private Integer contentCount;
-            private Integer likeCount;
-            private Integer collectCount;
+            private Integer content_count;
+            private Integer like_count;
+            private Integer collect_count;
             private String content;
-            private Integer createTime;
-            private Integer deleteTime;
-            private List<String> imageUrls;
+            private Integer create_time;
+            private Integer delete_time;
+            private List<String> image_urls;
 
-            public UserInfoDTO getUserInfo() {
-                return userInfo;
+            public UserInfoDTO getUser_info() {
+                return user_info;
             }
 
-            public void setUserInfo(UserInfoDTO userInfo) {
-                this.userInfo = userInfo;
+            public void setUser_info(UserInfoDTO user_info) {
+                this.user_info = user_info;
             }
 
             public Integer getId() {
@@ -146,28 +182,28 @@ public class CommunityInfoResult extends BaseResult implements Serializable {
                 this.userId = userId;
             }
 
-            public Integer getContentCount() {
-                return contentCount;
+            public Integer getContent_count() {
+                return content_count;
             }
 
-            public void setContentCount(Integer contentCount) {
-                this.contentCount = contentCount;
+            public void setContent_count(Integer content_count) {
+                this.content_count = content_count;
             }
 
-            public Integer getLikeCount() {
-                return likeCount;
+            public Integer getLike_count() {
+                return like_count;
             }
 
-            public void setLikeCount(Integer likeCount) {
-                this.likeCount = likeCount;
+            public void setLike_count(Integer like_count) {
+                this.like_count = like_count;
             }
 
-            public Integer getCollectCount() {
-                return collectCount;
+            public Integer getCollect_count() {
+                return collect_count;
             }
 
-            public void setCollectCount(Integer collectCount) {
-                this.collectCount = collectCount;
+            public void setCollect_count(Integer collect_count) {
+                this.collect_count = collect_count;
             }
 
             public String getContent() {
@@ -178,57 +214,67 @@ public class CommunityInfoResult extends BaseResult implements Serializable {
                 this.content = content;
             }
 
-            public Integer getCreateTime() {
-                return createTime;
+            public Integer getCreate_time() {
+                return create_time;
             }
 
-            public void setCreateTime(Integer createTime) {
-                this.createTime = createTime;
+            public void setCreate_time(Integer create_time) {
+                this.create_time = create_time;
             }
 
-            public Integer getDeleteTime() {
-                return deleteTime;
+            public Integer getDelete_time() {
+                return delete_time;
             }
 
-            public void setDeleteTime(Integer deleteTime) {
-                this.deleteTime = deleteTime;
+            public void setDelete_time(Integer delete_time) {
+                this.delete_time = delete_time;
             }
 
-            public List<String> getImageUrls() {
-                return imageUrls;
+            public List<String> getImage_urls() {
+                return image_urls;
             }
 
-            public void setImageUrls(List<String> imageUrls) {
-                this.imageUrls = imageUrls;
+            public void setImage_urls(List<String> image_urls) {
+                this.image_urls = image_urls;
             }
 
             public static class UserInfoDTO implements Serializable {
-                private Integer userId;
-                private String nickName;
+                @Override
+                public String toString() {
+                    return "UserInfoDTO{" +
+                            "userId=" + user_id +
+                            ", nickName='" + nick_name + '\'' +
+                            ", account='" + account + '\'' +
+                            ", avatarImage='" + avatar_image + '\'' +
+                            '}';
+                }
+
+                private Integer user_id;
+                private String nick_name;
                 private String account;
-                private String avatarImage;
+                private String avatar_image;
 
                 public UserInfoDTO(Integer userId, String nickName, String account, String avatarImage) {
-                    this.userId = userId;
-                    this.nickName = nickName;
+                    this.user_id = userId;
+                    this.nick_name = nickName;
                     this.account = account;
-                    this.avatarImage = avatarImage;
+                    this.avatar_image = avatarImage;
                 }
 
-                public Integer getUserId() {
-                    return userId;
+                public Integer getUser_id() {
+                    return user_id;
                 }
 
-                public void setUserId(Integer userId) {
-                    this.userId = userId;
+                public void setUser_id(Integer user_id) {
+                    this.user_id = user_id;
                 }
 
-                public String getNickName() {
-                    return nickName;
+                public String getNick_name() {
+                    return nick_name;
                 }
 
-                public void setNickName(String nickName) {
-                    this.nickName = nickName;
+                public void setNick_name(String nick_name) {
+                    this.nick_name = nick_name;
                 }
 
                 public String getAccount() {
@@ -239,12 +285,12 @@ public class CommunityInfoResult extends BaseResult implements Serializable {
                     this.account = account;
                 }
 
-                public String getAvatarImage() {
-                    return avatarImage;
+                public String getAvatar_image() {
+                    return avatar_image;
                 }
 
-                public void setAvatarImage(String avatarImage) {
-                    this.avatarImage = avatarImage;
+                public void setAvatar_image(String avatar_image) {
+                    this.avatar_image = avatar_image;
                 }
             }
         }

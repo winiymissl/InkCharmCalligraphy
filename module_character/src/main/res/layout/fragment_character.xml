@@ -77,6 +77,19 @@
         app:layout_constraintTop_toBottomOf="@+id/chip_smart_score"
         tools:layout_editor_absoluteX="16dp" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textView_unlogin"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="未登录"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/chip_smart_score" />
+
     <com.google.android.material.chip.Chip
         android:id="@+id/chip_recommond"
         style="@style/Widget.MaterialComponents.Chip.Choice"

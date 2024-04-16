@@ -18,6 +18,7 @@ import com.example.common.eventbus.EventBusUtils;
 public class BaseFragment<T> extends Fragment {
     protected T binding;
 
+
     protected BaseActivity mActivity;
 
     @Override

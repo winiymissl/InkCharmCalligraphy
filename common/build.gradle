@@ -28,6 +28,51 @@ android {
 
 }
 dependencies {
+    // PictureSelector basic (Necessary)
+    api 'io.github.lucksiege:pictureselector:v3.11.2'
+
+    // image compress library (Not necessary)
+    api 'io.github.lucksiege:compress:v3.11.2'
+
+    // uCrop library (Not necessary)
+    api 'io.github.lucksiege:ucrop:v3.11.2'
+
+    // simple camerax library (Not necessary)
+    api 'io.github.lucksiege:camerax:v3.11.2'
+
+    //点赞
+    api 'com.wx.goodview:goodview:1.0.0'
+    //banner
+    api 'io.github.youth5201314:banner:2.2.3'
+
+    //coord
+    api 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
+
+    //circleImageView
+    api 'de.hdodenhof:circleimageview:3.1.0'
+
+    //scene view
+//    api 'io.github.sceneview:sceneview:2.1.0'
+
+    //骨架加载器
+    api 'com.ethanhua:skeleton:1.1.2'
+    api 'io.supercharge:shimmerlayout:2.1.0'
+
+    //AutoDispose
+    api 'com.uber.autodispose2:autodispose-android:2.2.1'
+    api 'com.uber.autodispose2:autodispose-androidx-lifecycle-test:2.2.1'
+    api 'com.uber.autodispose2:autodispose-androidx-lifecycle:2.2.1'
+
+    //pagingSource
+    def paging_version = "3.2.1"
+
+    api "androidx.paging:paging-runtime:$paging_version"
+
+    // alternatively - without Android dependencies for tests
+    testImplementation "androidx.paging:paging-common:$paging_version"
+    // optional - RxJava3 support
+    api "androidx.paging:paging-rxjava3:$paging_version"
+
     //高斯模糊
     api 'com.github.bumptech.glide:glide:4.16.0'
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
@@ -57,12 +102,12 @@ dependencies {
 
     //声明所有的依赖
     //exoPlayer
-    api "androidx.media3:media3-exoplayer:1.3.0"
-    api "androidx.media3:media3-ui:1.3.0"
-    api "androidx.media3:media3-exoplayer-hls:1.3.0"
-    api "androidx.media3:media3-common:1.3.0"
-    api "androidx.media3:media3-session:1.3.0"
-    api "androidx.media3:media3-exoplayer-dash:1.3.0"
+    api "androidx.media3:media3-exoplayer:1.3.1"
+    api "androidx.media3:media3-ui:1.3.1"
+    api "androidx.media3:media3-exoplayer-hls:1.3.1"
+    api "androidx.media3:media3-common:1.3.1"
+    api "androidx.media3:media3-session:1.3.1"
+    api "androidx.media3:media3-exoplayer-dash:1.3.1"
 
     //设置
     api 'androidx.preference:preference-ktx:1.2.1'

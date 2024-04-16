@@ -16,7 +16,7 @@ import retrofit2.http.POST;
  * @Version 1.0
  */
 public interface MineAPI {
-    @GET("/user/userinfo")
+    @POST("/user/userinfo")
     Observable<UserInfoResult> getUserinfo(@Header("Authorization") String token);
 
     @POST("/user/modinfo")

@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.common.base.BaseApplication;
 import com.example.common.base.BaseViewModel;
 import com.example.common.dagger.AppComponent;
+import com.example.common.livedata.SingleLiveEvent;
 import com.example.module_login.R;
 import com.example.module_login.dagger.DaggerLoginComponent;
 import com.example.module_login.data.Repository;
@@ -24,8 +25,7 @@ public class RegisterViewModel extends BaseViewModel {
     private MutableLiveData<RegisterFormState> registerFormStateMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<RegisterUserResult> registerResultMutableLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<Throwable> throwableMutableLiveData = new MutableLiveData<>();
-
+    private SingleLiveEvent<Throwable> throwableMutableLiveData = new SingleLiveEvent<>();
     public LiveData<Throwable> getThrowableMutableLiveData() {
         return throwableMutableLiveData;
     }
