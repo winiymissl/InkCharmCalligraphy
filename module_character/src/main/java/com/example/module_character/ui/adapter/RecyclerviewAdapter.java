@@ -19,15 +19,15 @@ import java.util.List;
  * @Date 2024-04-11 0:44ersion 1.0
  */
 public class RecyclerviewAdapter extends RecyclerView.Adapter {
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
+//    public interface OnItemClickListener {
+//        void onItemClick(View view, int position);
+//    }
+//
+//    public OnItemClickListener onItemClickListener;
 
-    public OnItemClickListener onItemClickListener;
-
-    public RecyclerviewAdapter(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
+//    public RecyclerviewAdapter(OnItemClickListener onItemClickListener) {
+//        this.onItemClickListener = onItemClickListener;
+//    }
 
     List<Integer> list;
 
@@ -48,7 +48,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         myViewHolder.bind(list.get(position));
-        myViewHolder.onClick(position);
+//        myViewHolder.onClick(position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -64,11 +64,11 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter {
             Glide.with(binding.getRoot()).load(integer).into(binding.carouselImageView);
         }
 
-        void onClick(int position) {
-            binding.getRoot().setOnClickListener(view -> {
-                onItemClickListener.onItemClick(view, position);
-            });
-        }
+//        void onClick(int position) {
+//            binding.getRoot().setOnClickListener(view -> {
+//                onItemClickListener.onItemClick(view, position);
+//            });
+//        }
     }
 
     @Override

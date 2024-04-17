@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +26,7 @@ import com.example.module_community.databinding.FragmentCreatePostBinding;
 import com.example.module_community.ui.adapter.PostRecyclerviewAdapter;
 import com.example.module_community.ui.adapter.model.ChoosePicItem;
 import com.example.module_community.ui.viewmodel.CommunityViewModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.luck.picture.lib.basic.PictureSelector;
 import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -39,12 +42,16 @@ import java.util.List;
  * @Version 1.0
  */
 public class CreatePostFragment extends BaseFragment<FragmentCreatePostBinding> {
+
+    public static CreatePostFragment newInstance() {
+        return new CreatePostFragment();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setEnterTransition(new Explode());
         setExitTransition(new Explode());
-
     }
 
 
@@ -60,29 +67,58 @@ public class CreatePostFragment extends BaseFragment<FragmentCreatePostBinding> 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         CommunityViewModel mViewModel = new ViewModelProvider(this).get(CommunityViewModel.class);
+        NavController navController = NavHostFragment.findNavController(this);
+
         List<ChoosePicItem> list = new ArrayList<>();
         PostRecyclerviewAdapter adapter = new PostRecyclerviewAdapter();
         binding.recyclerViewPic.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false));
         binding.recyclerViewPic.setAdapter(adapter);
-        binding.recyclerViewPic.addOnItemTouchListener(new MyOnItemTouchListener(getContext(), (view1, position) -> {
-            if (position == list.size()) {
-                list.clear();
-                PictureSelector.create(getActivity()).openGallery(SelectMimeType.ofImage()).setImageEngine(GlideEngine.createGlideEngine()).forResult(new OnResultCallbackListener<LocalMedia>() {
-                    @Override
-                    public void onResult(ArrayList<LocalMedia> result) {
-                        for (LocalMedia localMedia : result) {
-                            list.add(new ChoosePicItem(new File(Utils.getFilePathFromUri(getActivity(), Uri.parse(localMedia.getAvailablePath())))));
+
+
+        binding.recyclerViewPic.addOnItemTouchListener(new MyOnItemTouchListener(getActivity(), binding.recyclerViewPic, new MyOnItemTouchListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (position == list.size()) {
+                    list.clear();
+                    PictureSelector.create(getActivity()).openGallery(SelectMimeType.ofImage()).setImageEngine(GlideEngine.createGlideEngine()).forResult(new OnResultCallbackListener<LocalMedia>() {
+                        @Override
+                        public void onResult(ArrayList<LocalMedia> result) {
+                            for (LocalMedia localMedia : result) {
+                                list.add(new ChoosePicItem(new File(Utils.getFilePathFromUri(getActivity(), Uri.parse(localMedia.getAvailablePath())))));
+                            }
+                            adapter.setList(list);
                         }
-                        adapter.setList(list);
-                    }
 
-                    @Override
-                    public void onCancel() {
+                        @Override
+                        public void onCancel() {
 
-                    }
+                        }
+                    });
+                } else {
+                    /**
+                     * 用于预览照片
+                     ShapeableImageView shapeableImageView = binding.recyclerViewPic.findViewById(R.id.image_view_add);
+                     FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder().addSharedElement(shapeableImageView, shapeableImageView.getTransitionName()).build();
+                     Bundle bundle = new Bundle();
+                     bundle.putSerializable("file", adapter.getList().get(position).getFile());
+                     navController.navigate(R.id.preViewFragment, bundle, null, extras);*/
+                }
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+                builder.setTitle("提示").setMessage("是否删除？");
+                builder.setNeutralButton("close", (dialog, which) -> {
                 });
+                builder.setPositiveButton("删除", (dialog, which) -> {
+                    adapter.deleteItem(position);
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }));
+
         binding.chipPost.setOnClickListener(v -> {
             mViewModel.postData(MyMMkv.getMyDefaultMMkv().getString("token", null), item2File(adapter.getList()), binding.editTextContent.getText().toString());
         });

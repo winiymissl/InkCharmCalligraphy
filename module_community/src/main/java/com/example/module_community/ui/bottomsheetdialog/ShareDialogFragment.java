@@ -1,4 +1,4 @@
-package com.example.module_community.ui.dialog;
+package com.example.module_community.ui.bottomsheetdialog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

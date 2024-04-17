@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <data>
+
+        <variable
+            name="item"
+            type="com.example.module_community.data.model.result.PostDetailResult.DataDTO" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:clipToPadding="false">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:clipToPadding="false">
 
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:layout_margin="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textView_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:layout_constraintTop_toBottomOf="@id/banner" />
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    bannerImageUrl="@{item.post_data.image_urls}"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_margin="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:layout_constraintTop_toBottomOf="@id/textView_content" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textView_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="@{item.post_data.content}"
+                    app:layout_constraintTop_toBottomOf="@id/banner" />
 
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/textView_content" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:layout_constraintTop_toBottomOf="@id/divider" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:clipToPadding="true"
+                    android:minHeight="200dp"
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,26 +65,31 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/circleImageView"
+            style="@style/ShapeAppearance.Material3.Corner.Small"
+            imageUrl="@{item.post_data.user_info.avatar_image}"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView_nickname"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:gravity="center"
-            android:text="nick_name"
+            android:text="@{item.post_data.user_info.nick_name}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/circleImageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_is_followed"
+            android:checked="@{item.status_data.whether_follow}"
             style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,40 +112,41 @@
         app:hideOnScroll="true">
 
         <com.google.android.material.checkbox.MaterialCheckBox
-
-            android:id="@+id/icon"
+            android:id="@+id/icon_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="@{item.status_data.whether_like}"
             android:button="@drawable/selector_like"
-            app:buttonTint="@android:color/white" />
+            app:buttonTint="@android:color/black" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/iconButton_collect"
-            style="?attr/materialIconButtonStyle"
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/icon_collect"
             android:layout_width="wrap_content"
+            android:button="@drawable/selector_collect"
+            android:checked="@{item.status_data.whether_collect}"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_collect" />
+            app:buttonTint="@android:color/black" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/iconButton_share"
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_share" />
+            app:icon="@drawable/share" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/iconButton_common"
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_common" />
+            app:icon="@drawable/comment" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_left"
-        app:layout_anchor="@id/bottomAppBar" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_left"
+            app:layout_anchor="@id/bottomAppBar" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

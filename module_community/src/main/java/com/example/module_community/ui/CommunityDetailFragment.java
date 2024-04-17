@@ -1,22 +1,39 @@
 package com.example.module_community.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.Explode;
 
+import com.ethanhua.skeleton.RecyclerViewSkeletonScreen;
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.ViewSkeletonScreen;
 import com.example.common.base.BaseFragment;
+import com.example.common.base.MyMMkv;
 import com.example.module_community.R;
+import com.example.module_community.data.model.result.CommentResult;
 import com.example.module_community.databinding.FragmentCommunityDetailBinding;
-import com.google.android.material.button.MaterialButton;
+import com.example.module_community.ui.adapter.CommentAdapter;
+import com.example.module_community.ui.adapter.model.CommentItem;
+import com.example.module_community.ui.viewmodel.CommunityDetailViewModel;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.chip.Chip;
 import com.wx.goodview.GoodView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Author winiymissl
@@ -24,7 +41,7 @@ import com.wx.goodview.GoodView;
  * @Version 1.0
  */
 public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetailBinding> {
-
+    private CommunityDetailViewModel mViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,50 +61,140 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        /*
+         * 基础资源
+         * */
+        int id = getArguments().getInt("post_id");
+        mViewModel = new ViewModelProvider(this).get(CommunityDetailViewModel.class);
+
+        CommentAdapter adapter_comment = new CommentAdapter();
+        binding.recyclerViewComment.setLayoutManager(new LinearLayoutManager(getHoldingsActivity()));
+        binding.recyclerViewComment.setAdapter(adapter_comment);
+
+        ViewSkeletonScreen skeleton_nickName = Skeleton.bind(binding.textViewNickname).load(R.layout.item_skeleton_nick_name).show();
+        ViewSkeletonScreen skeleton_avatar = Skeleton.bind(binding.circleImageView).load(R.layout.item_skeleton_avatar).show();
+        ViewSkeletonScreen skeleton_banner = Skeleton.bind(binding.banner).load(R.layout.item_skeleton_image_view).show();
+        ViewSkeletonScreen skeleton_content = Skeleton.bind(binding.textViewContent).load(R.layout.item_skeleton_content).show();
+        RecyclerViewSkeletonScreen skeleton_comment = Skeleton.bind(binding.recyclerViewComment).adapter(adapter_comment).load(R.layout.item_skeleton_comment).show();
+
+        mViewModel.fetchCommentData(id, 1, 1);
+        mViewModel.fetchPostData(MyMMkv.getMyDefaultMMkv().getString("token", null), id);
 
 
-//        binding.icon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//                Chip c = (Chip) buttonView;
-//                if (isChecked) {
-//                    c.setChipIcon(getResources().getDrawable(com.example.common.R.drawable.ic_like_red));
-//                    GoodView goodView = new GoodView(getHoldingsActivity());
-//                    goodView.setText("+1");
-//                    goodView.show(c);
-//                } else {
-//                    c.setChipIcon(getResources().getDrawable(com.example.common.R.drawable.ic_like));
-//                    GoodView goodView = new GoodView(getHoldingsActivity());
-//                    goodView.setText("-1");
-//                    goodView.show(c);
-//                }
-//            }
-//        });
-//        binding.icon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                MaterialCheckBox c = (MaterialCheckBox) buttonView;
-//                if (isChecked) {
-//                    c.set(getResources().getDrawable(com.example.common.R.drawable.ic_like_red));
-//                    GoodView goodView = new GoodView(getHoldingsActivity());
-//                    goodView.setText("+1");
-//                    goodView.show(c);
-//                } else {
-//                    c.setChipIcon(getResources().getDrawable(com.example.common.R.drawable.ic_like));
-//                    GoodView goodView = new GoodView(getHoldingsActivity());
-//                    goodView.setText("-1");
-//                    goodView.show(c);
-//                }
-//
-//            }
-//        });
-        binding.iconButtonCollect.setOnClickListener(v -> {
-            GoodView goodView = new GoodView(getHoldingsActivity());
-            goodView.setImage(com.example.common.R.drawable.ic_collect_yellow);
-            goodView.setText("已收藏");
-            goodView.show(v);
+        mViewModel.getmCommentMutableLiveData().observe(getViewLifecycleOwner(), commentResult -> {
+            if (commentResult == null) {
+                return;
+            }
+            if (commentResult.getCode() == 200) {
+                skeleton_comment.hide();
+                Log.d("世界是一个bug", commentResult.toString());
+                if (commentResult.getData().getComment_data() != null) {
+                    adapter_comment.setCommentData(net2comment(commentResult));
+                }
+            } else {
+                skeleton_comment.show();
+            }
         });
+        mViewModel.getmPostDetailMutableLiveData().observe(getViewLifecycleOwner(), postDetailResult -> {
+            if (postDetailResult == null) {
+                return;
+            }
+            if (postDetailResult.getCode() == 200) {
+                skeleton_nickName.hide();
+                skeleton_avatar.hide();
+                skeleton_banner.hide();
+                skeleton_content.hide();
+                binding.setItem(postDetailResult.getData());
+            } else {
+                skeleton_nickName.show();
+                skeleton_avatar.show();
+                skeleton_banner.show();
+                skeleton_content.show();
+            }
+        });
+
+        binding.iconLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MaterialCheckBox c = (MaterialCheckBox) buttonView;
+                if (isChecked) {
+                    c.setButtonDrawable(getResources().getDrawable(com.example.common.R.drawable.like_red));
+                    GoodView goodView = new GoodView(getHoldingsActivity());
+                    goodView.setText("+1");
+                    goodView.show(c);
+                    mViewModel.like(MyMMkv.getMyDefaultMMkv().getString("token", null), id);
+                    mViewModel.getmLikeMutableLiveData().observe(getViewLifecycleOwner(), likeResult -> {
+                        if (likeResult == null) {
+                            return;
+                        }
+                        if (likeResult.getCode() == 200) {
+                            Toast.makeText(mActivity, "点赞成功", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    c.setButtonDrawable(getResources().getDrawable(com.example.common.R.drawable.like));
+                    GoodView goodView = new GoodView(getHoldingsActivity());
+                    goodView.setText("-1");
+                    goodView.show(c);
+                    mViewModel.cancelLike(MyMMkv.getMyDefaultMMkv().getString("token", null), id);
+                    mViewModel.getmCancelLikeMutableLiveData().observe(getViewLifecycleOwner(), cancelLikeResult -> {
+                        if (cancelLikeResult == null) {
+                            return;
+                        }
+                        if (cancelLikeResult.isSuccess()) {
+                            Toast.makeText(mActivity, "取消点赞成功", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+        binding.chipIsFollowed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Chip c = (Chip) buttonView;
+                if (isChecked) {
+                    
+                }
+            }
+        });
+
+        binding.iconCollect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MaterialCheckBox c = (MaterialCheckBox) buttonView;
+                if (isChecked) {
+                    c.setButtonDrawable(getResources().getDrawable(com.example.common.R.drawable.collect_yellow));
+                    GoodView goodView = new GoodView(getHoldingsActivity());
+                    goodView.setText("收藏");
+                    goodView.show(c);
+                    mViewModel.getmCollectMutableLiveData().observe(getViewLifecycleOwner(), collectResult -> {
+                        if (collectResult == null) {
+                            return;
+                        }
+                        if (collectResult.isSuccess()) {
+                            Toast.makeText(mActivity, "收藏成功", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    c.setButtonDrawable(getResources().getDrawable(com.example.common.R.drawable.collect));
+                    GoodView goodView = new GoodView(getHoldingsActivity());
+                    goodView.setText("取消收藏");
+                    goodView.show(c);
+                    mViewModel.cancelCollect(MyMMkv.getMyDefaultMMkv().getString("token", null), id);
+                    mViewModel.getmCancelCollectMutableLiveData().observe(getViewLifecycleOwner(), cancelCollectResult -> {
+                        if (cancelCollectResult == null) {
+                            return;
+                        }
+                        if (cancelCollectResult.isSuccess()) {
+                            Toast.makeText(mActivity, "取消收藏成功", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+
         binding.iconButtonShare.setOnClickListener(v -> {
             /*
              * 分享的dialog
@@ -95,18 +202,27 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
             NavHostFragment.findNavController(this).navigate(R.id.shareDialogFragment);
         });
 
-        binding.iconButtonCommon.addOnCheckedChangeListener(new MaterialButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(MaterialButton button, boolean isChecked) {
-                if (isChecked) {
-
-                } else {
-
-                }
-            }
+        binding.iconButtonCommon.setOnClickListener(v -> {
+            /*
+             * 定格到评论的位置
+             * */
         });
         binding.fabBack.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).popBackStack();
         });
+    }
+
+    private List<CommentItem> net2comment(CommentResult result) {
+        List<CommentItem> list = new ArrayList<>();
+        if (result.getData().getComment_data() != null) {
+            result.getData().getComment_data().forEach(item -> {
+                long temp = item.getCreate_time();
+                Date date = new Date(temp);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDate = sdf.format(date);
+                list.add(new CommentItem(item.getUser_info().getAvatar_image(), formattedDate, item.getComment(), item.getUser_info().getNick_name()));
+            });
+        }
+        return list;
     }
 }

@@ -11,11 +11,9 @@ import java.util.List;
  * @Version 1.0
  */
 public class CommunityInfoResult extends BaseResult implements Serializable {
-
     public DataDTO getData() {
         return data;
     }
-
     public void setData(DataDTO data) {
         this.data = data;
     }

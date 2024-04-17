@@ -1,6 +1,7 @@
 package com.example.module_community.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,6 @@ import com.example.module_community.databinding.FragmentCommunityBinding;
 import com.example.module_community.ui.adapter.RecyclerviewCommunityAdapter;
 import com.example.module_community.ui.viewmodel.CommunityViewModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
@@ -59,8 +57,13 @@ public class CommunityFragment extends BaseFragment<FragmentCommunityBinding> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CommunityViewModel.class);
-        RecyclerviewCommunityAdapter adapter_temp = new RecyclerviewCommunityAdapter((view1, position) -> {
-            NavHostFragment.findNavController(this).navigate(R.id.communityDetailFragment);
+
+        RecyclerviewCommunityAdapter adapter_temp = new RecyclerviewCommunityAdapter((view1, position, list) -> {
+            int id = list.get(position).getPost_id();
+            Bundle bundle = new Bundle();
+            bundle.putInt("post_id", id);
+            Log.d("世界是一个bug", String.valueOf(id));
+            NavHostFragment.findNavController(this).navigate(R.id.communityDetailFragment, bundle);
         });
         adapter = new ScaleInAnimationAdapter(adapter_temp);
         adapter.setDuration(800);
@@ -97,21 +100,15 @@ public class CommunityFragment extends BaseFragment<FragmentCommunityBinding> {
             binding.smartRefreshLayoutCommunity.finishRefresh();
             binding.smartRefreshLayoutCommunity.finishLoadMore(false);
         });
-        binding.smartRefreshLayoutCommunity.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                skeleton.show();
-                page = 1;
-                refreshLayout.setEnableLoadMore(true);
-                mViewModel.fetchRemoteDataSource(page, 10);
-            }
+        binding.smartRefreshLayoutCommunity.setOnRefreshListener(refreshLayout -> {
+            skeleton.show();
+            page = 1;
+            refreshLayout.setEnableLoadMore(true);
+            mViewModel.fetchRemoteDataSource(page, 10);
         });
-        binding.smartRefreshLayoutCommunity.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                mViewModel.fetchRemoteDataSource(page, 10);
-            }
+        binding.smartRefreshLayoutCommunity.setOnLoadMoreListener(refreshLayout -> {
+            page++;
+            mViewModel.fetchRemoteDataSource(page, 10);
         });
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

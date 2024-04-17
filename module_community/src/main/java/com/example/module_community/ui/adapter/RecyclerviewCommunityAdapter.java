@@ -34,7 +34,11 @@ public class RecyclerviewCommunityAdapter extends RecyclerView.Adapter {
 //        super(diffCallback, mainDispatcher, workerDispatcher);
 //    }
     public interface OnItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position, List<CommunityItem> list);
+    }
+
+    public List<CommunityItem> getList() {
+        return list;
     }
 
     private OnItemClickListener onItemClickListener;
@@ -105,7 +109,7 @@ public class RecyclerviewCommunityAdapter extends RecyclerView.Adapter {
 
         void onClick(int position) {
             binding.getRoot().setOnClickListener(v -> {
-                onItemClickListener.onItemClick(v, position);
+                onItemClickListener.onItemClick(v, position, list);
             });
         }
     }
@@ -120,7 +124,7 @@ public class RecyclerviewCommunityAdapter extends RecyclerView.Adapter {
         List<CommunityItem> list = new ArrayList<>();
 //        if (result.getData().getPost_data() != null) {
         result.getData().getPost_data().forEach(postDataDTO -> {
-            list.add(new CommunityItem(postDataDTO.getImage_urls().get(0), postDataDTO.getUser_info().getNick_name(), postDataDTO.getContent(), postDataDTO.getUser_info().getAvatar_image()));
+            list.add(new CommunityItem(postDataDTO.getImage_urls().get(0), postDataDTO.getUser_info().getNick_name(), postDataDTO.getContent(), postDataDTO.getUser_info().getAvatar_image(), postDataDTO.getId()));
         });
 //        }
         return list;

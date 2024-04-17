@@ -1,12 +1,24 @@
 package com.example.module_community.dagger.net;
 
+import com.example.module_community.data.model.request.CancelCollectRequest;
+import com.example.module_community.data.model.request.CancelLikeRequest;
+import com.example.module_community.data.model.request.CollectRequest;
+import com.example.module_community.data.model.request.CommentRequest;
 import com.example.module_community.data.model.request.CommunityInfoRequest;
+import com.example.module_community.data.model.request.LikeRequest;
+import com.example.module_community.data.model.request.PostDetailRequest;
+import com.example.module_community.data.model.result.CancelCollectResult;
+import com.example.module_community.data.model.result.CancelLikeResult;
+import com.example.module_community.data.model.result.CollectResult;
+import com.example.module_community.data.model.result.CommentResult;
 import com.example.module_community.data.model.result.CommunityInfoResult;
+import com.example.module_community.data.model.result.LikeResult;
+import com.example.module_community.data.model.result.PostDetailResult;
 import com.example.module_community.data.model.result.PostResult;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
@@ -22,9 +34,28 @@ import retrofit2.http.Part;
 public interface CommunityAPI {
 
     @POST("/community/look/allposts")
-    Single<CommunityInfoResult> getPosts(@Body CommunityInfoRequest request);
+    Observable<CommunityInfoResult> getPosts(@Body CommunityInfoRequest request);
 
     @POST("/community/create/post")
     @Multipart
-    Single<PostResult> post(@Header("Authorization") String token, @Part("images") List<RequestBody> images, @Part("content") RequestBody content);
+    Observable<PostResult> post(@Header("Authorization") String token, @Part("images") List<RequestBody> images, @Part("content") RequestBody content);
+
+    @POST("/community/view/post_details")
+    Observable<PostDetailResult> getPostDetail(@Header("Authorization") String token, @Body PostDetailRequest request);
+
+    @POST("/community/look/comment")
+    Observable<CommentResult> getComment(@Body CommentRequest request);
+
+    @POST("/community/like/post")
+    Observable<LikeResult> like(@Header("Authorization") String token, @Body LikeRequest request);
+
+    @POST("/community/delete/post")
+    Observable<CancelLikeResult> cancelLike(@Header("Authorization") String token, @Body CancelLikeRequest request);
+
+    @POST("/community/collect/post")
+    Observable<CollectResult> collect(@Header("Authorization") String token, @Body CollectRequest request);
+
+    @POST("/community/cancel/collect")
+    Observable<CancelCollectResult> cancelCollect(@Header("Authorization") String token, @Body CancelCollectRequest request);
+
 }

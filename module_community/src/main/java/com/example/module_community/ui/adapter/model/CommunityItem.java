@@ -6,6 +6,8 @@ package com.example.module_community.ui.adapter.model;
  * @Version 1.0
  */
 public class CommunityItem {
+    int post_id;
+
     String image;
     String name;
     String content;
@@ -21,11 +23,16 @@ public class CommunityItem {
                 '}';
     }
 
-    public CommunityItem(String image, String name, String content, String user_avatar) {
+    public CommunityItem(String image, String name, String content, String user_avatar, int post_id) {
         this.image = image;
         this.name = name;
         this.content = content;
         this.user_avatar = user_avatar;
+        this.post_id = post_id;
+    }
+
+    public int getPost_id() {
+        return post_id;
     }
 
     public String getUser_avatar() {

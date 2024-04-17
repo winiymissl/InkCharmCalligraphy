@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.common.base.BaseFragment;
@@ -20,7 +19,6 @@ import com.example.module_character.ui.adapter.RecyclerviewAdapter;
 import com.google.android.material.carousel.CarouselLayoutManager;
 import com.google.android.material.carousel.HeroCarouselStrategy;
 import com.google.android.material.carousel.MultiBrowseCarouselStrategy;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.transition.MaterialFade;
 
 import java.util.ArrayList;
@@ -64,12 +62,11 @@ public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        RecyclerviewAdapter adapter = new RecyclerviewAdapter(new RecyclerviewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
+//        ShapeableImageView shapeableImageView = (ShapeableImageView) view1.findViewById(R.id.carousel_image_view);
+//        FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder().addSharedElement(shapeableImageView, shapeableImageView.getTransitionName()).build();
+//        NavHostFragment.findNavController(this).navigate(R.id.enterViewFragment, null, null, extras);
 
-            }
-        });
+        RecyclerviewAdapter adapter = new RecyclerviewAdapter();
         List<Integer> list = new ArrayList<>();
         list.add(com.example.common.R.drawable.ic_history);
         list.add(com.example.common.R.drawable.ic_history_2);
@@ -77,11 +74,8 @@ public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
         adapter.setData(list);
         binding.carouselRecyclerViewHistory.setLayoutManager(new CarouselLayoutManager(new HeroCarouselStrategy()));
         binding.carouselRecyclerViewHistory.setAdapter(adapter);
-        RecyclerviewAdapter adapter_recommand = new RecyclerviewAdapter((view1, position) -> {
-            ShapeableImageView shapeableImageView = (ShapeableImageView) view1.findViewById(R.id.carousel_image_view);
-            FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder().addSharedElement(shapeableImageView, shapeableImageView.getTransitionName()).build();
-            NavHostFragment.findNavController(this).navigate(R.id.enterViewFragment, null, null, extras);
-        });
+
+        RecyclerviewAdapter adapter_recommand = new RecyclerviewAdapter();
         List<Integer> list_recommand = new ArrayList<>();
         list_recommand.add(com.example.common.R.drawable.ic_shoujin_history);
         list_recommand.add(com.example.common.R.drawable.ic_caoshu);
@@ -89,6 +83,7 @@ public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
         adapter_recommand.setData(list_recommand);
         binding.carouselRecyclerViewRecommond.setLayoutManager(new CarouselLayoutManager(new MultiBrowseCarouselStrategy()));
         binding.carouselRecyclerViewRecommond.setAdapter(adapter_recommand);
+
         binding.textViewScore.setOnClickListener(v -> {
             if (isLogin()) {
                 NavHostFragment.findNavController(this).navigate(R.id.scoreFragment);
@@ -109,6 +104,12 @@ public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
             } else {
                 Utils.tryAgain("请先登录", getHoldingsActivity());
             }
+        });
+        binding.buttonMatch.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(R.id.matchFragment);
+        });
+        binding.chipRecommond.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(R.id.recommendFragment);
         });
     }
 }

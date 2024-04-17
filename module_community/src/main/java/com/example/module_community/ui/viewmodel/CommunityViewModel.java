@@ -25,8 +25,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 
 public class CommunityViewModel extends BaseViewModel {
     @Inject

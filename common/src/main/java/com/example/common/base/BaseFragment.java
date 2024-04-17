@@ -19,6 +19,8 @@ public class BaseFragment<T> extends Fragment {
     protected T binding;
 
 
+    protected BaseFragment mFragment;
+
     protected BaseActivity mActivity;
 
     @Override
@@ -26,6 +28,7 @@ public class BaseFragment<T> extends Fragment {
         super.onAttach(context);
         this.mActivity = (BaseActivity) context;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -27,10 +27,18 @@
     </fragment>
     <dialog
         android:id="@+id/shareDialogFragment"
-        android:name="com.example.module_community.ui.dialog.ShareDialogFragment"
+        android:name="com.example.module_community.ui.bottomsheetdialog.ShareDialogFragment"
         android:label="ShareDialogFragment" />
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.example.module_community.ui.CreatePostFragment"
-        android:label="CreatePostFragment" />
+        android:label="CreatePostFragment">
+        <action
+            android:id="@+id/action_createPostFragment_to_preViewFragment"
+            app:destination="@id/preViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/preViewFragment"
+        android:name="com.example.module_community.ui.PreViewFragment"
+        android:label="PreViewFragment" />
 </navigation>

@@ -28,6 +28,9 @@ android {
 
 }
 dependencies {
+    //popupwindow
+    api 'io.github.razerdp:BasePopup:3.2.1'
+
     // PictureSelector basic (Necessary)
     api 'io.github.lucksiege:pictureselector:v3.11.2'
 

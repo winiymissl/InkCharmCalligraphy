@@ -4,6 +4,7 @@ import com.example.common.dagger.AppComponent;
 import com.example.common.dagger.PreActivity;
 import com.example.module_community.data.MyRxPagingSource;
 import com.example.module_community.data.RemoteDataSource;
+import com.example.module_community.ui.viewmodel.CommunityDetailViewModel;
 import com.example.module_community.ui.viewmodel.CommunityViewModel;
 
 import dagger.Component;
@@ -22,4 +23,6 @@ public interface CommunityComponent {
     void injectTo(RemoteDataSource remoteDataSource);
 
     void injectTo(MyRxPagingSource rxPagingSource);
+
+    void injectTo(CommunityDetailViewModel detailViewModel);
 }

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +32,11 @@ public class PostRecyclerviewAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public void deleteItem(int position) {
+        list.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public List<ChoosePicItem> getList() {
         return list;
     }
@@ -46,6 +52,7 @@ public class PostRecyclerviewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
+        ViewCompat.setTransitionName(myViewHolder.binding.imageViewAdd, "preView_image");
         if (list.size() == position) {
             myViewHolder.bindTo(position);
         } else {

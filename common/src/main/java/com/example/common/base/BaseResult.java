@@ -9,6 +9,13 @@ public class BaseResult {
     protected int code;
     protected String message;
 
+    public boolean isSuccess() {
+        if(200 == code){
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "BaseResult{" +
