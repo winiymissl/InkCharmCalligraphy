@@ -104,11 +104,11 @@ public class CommunityFragment extends BaseFragment<FragmentCommunityBinding> {
             skeleton.show();
             page = 1;
             refreshLayout.setEnableLoadMore(true);
-            mViewModel.fetchRemoteDataSource(page, 10);
+            mViewModel.fetchRemoteDataSource(page, 100);
         });
         binding.smartRefreshLayoutCommunity.setOnLoadMoreListener(refreshLayout -> {
             page++;
-            mViewModel.fetchRemoteDataSource(page, 10);
+            mViewModel.fetchRemoteDataSource(page, 100);
         });
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

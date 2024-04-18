@@ -150,6 +150,12 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
             binding.smartRefreshLayout.finishRefresh();
             tryAgain(throwable.toString());
         });
+        binding.includeLogin.linearlayoutFans.setOnClickListener(v -> {
+            navController.navigate(R.id.fansFragment);
+        });
+        binding.includeLogin.linearlayoutFollow.setOnClickListener(v -> {
+            navController.navigate(R.id.followFragment);
+        });
     }
 
     private void tryAgain(String message) {

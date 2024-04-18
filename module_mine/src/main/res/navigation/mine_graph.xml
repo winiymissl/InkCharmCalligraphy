@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_fragment_mineDestination_mine_fragment_to_modalBottomSheet"
             app:destination="@id/modalBottomSheet" />
+        <action
+            android:id="@+id/action_fragment_mineDestination_mine_fragment_to_followFragment"
+            app:destination="@id/followFragment" />
+        <action
+            android:id="@+id/action_fragment_mineDestination_mine_fragment_to_fansFragment"
+            app:destination="@id/fansFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment_mineDestination_setting_fragment"
@@ -41,5 +47,13 @@
         android:id="@+id/nickNameFragment"
         android:name="com.example.feature_mine.ui.NickNameFragment"
         android:label="NickNameFragment" />
+    <fragment
+        android:id="@+id/followFragment"
+        android:name="com.example.feature_mine.ui.FollowFragment"
+        android:label="FollowFragment" />
+    <fragment
+        android:id="@+id/fansFragment"
+        android:name="com.example.feature_mine.ui.FansFragment"
+        android:label="FansFragment" />
 
 </navigation>

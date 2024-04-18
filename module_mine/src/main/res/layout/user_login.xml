@@ -121,10 +121,10 @@
                 app:cardElevation="0dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearlayout_follow"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clickable="true"
-
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:orientation="vertical">
 
@@ -154,6 +154,7 @@
                 app:cardElevation="0dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearlayout_fans"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clickable="true"

@@ -1,17 +1,21 @@
 package com.example.module_community.dagger.net;
 
 import com.example.module_community.data.model.request.CancelCollectRequest;
+import com.example.module_community.data.model.request.CancelFollowRequest;
 import com.example.module_community.data.model.request.CancelLikeRequest;
 import com.example.module_community.data.model.request.CollectRequest;
 import com.example.module_community.data.model.request.CommentRequest;
 import com.example.module_community.data.model.request.CommunityInfoRequest;
+import com.example.module_community.data.model.request.FollowRequest;
 import com.example.module_community.data.model.request.LikeRequest;
 import com.example.module_community.data.model.request.PostDetailRequest;
 import com.example.module_community.data.model.result.CancelCollectResult;
+import com.example.module_community.data.model.result.CancelFollowResult;
 import com.example.module_community.data.model.result.CancelLikeResult;
 import com.example.module_community.data.model.result.CollectResult;
 import com.example.module_community.data.model.result.CommentResult;
 import com.example.module_community.data.model.result.CommunityInfoResult;
+import com.example.module_community.data.model.result.FollowResult;
 import com.example.module_community.data.model.result.LikeResult;
 import com.example.module_community.data.model.result.PostDetailResult;
 import com.example.module_community.data.model.result.PostResult;
@@ -58,4 +62,9 @@ public interface CommunityAPI {
     @POST("/community/cancel/collect")
     Observable<CancelCollectResult> cancelCollect(@Header("Authorization") String token, @Body CancelCollectRequest request);
 
+    @POST("/user/follow")
+    Observable<FollowResult> follow(@Header("Authorization") String token, @Body FollowRequest request);
+
+    @POST("/user/cancel_follow")
+    Observable<CancelFollowResult> cancelFollow(@Header("Authorization") String token, @Body CancelFollowRequest request);
 }

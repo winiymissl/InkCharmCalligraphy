@@ -17,6 +17,8 @@ import com.example.feature_mine.dagger.DaggerMineComponent;
 import com.example.feature_mine.dao.model.UserInfo;
 import com.example.feature_mine.data.Repository;
 import com.example.feature_mine.data.model.result.ChangeUserInfoResult;
+import com.example.feature_mine.data.model.result.FansResult;
+import com.example.feature_mine.data.model.result.FollowResult;
 import com.example.feature_mine.data.model.result.UserInfoResult;
 import com.example.feature_mine.ui.formstate.InputFormState;
 
@@ -36,6 +38,19 @@ public class MineViewModel extends BaseViewModel {
     private MutableLiveData<String> nameMutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<InputFormState> inputFormState = new MutableLiveData<>();
+
+
+    private MutableLiveData<FollowResult> followResultMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<FansResult> fansResultMutableLiveData = new MutableLiveData<>();
+
+
+    public LiveData<FollowResult> getFollowResultMutableLiveData() {
+        return followResultMutableLiveData;
+    }
+
+    public LiveData<FansResult> getFansResultMutableLiveData() {
+        return fansResultMutableLiveData;
+    }
 
     public LiveData<String> getNameMutableLiveData() {
         return nameMutableLiveData;
@@ -107,6 +122,22 @@ public class MineViewModel extends BaseViewModel {
                 throwableMutableLiveData.postValue(error);
             });
         }
+    }
+
+    public void fetchFollow(String token, int page, int page_size) {
+        repository.getRemoteDataSource().getFollow(token, page, page_size).subscribe(followResult -> {
+            followResultMutableLiveData.postValue(followResult);
+        }, error -> {
+            throwableMutableLiveData.postValue(error);
+        });
+    }
+
+    public void fetchFans(String token, int page, int page_size) {
+        repository.getRemoteDataSource().getFans(token, page, page_size).subscribe(fansResult -> {
+            fansResultMutableLiveData.postValue(fansResult);
+        }, error -> {
+            throwableMutableLiveData.postValue(error);
+        });
     }
 
 

@@ -20,6 +20,7 @@ import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
 import com.example.common.base.BaseFragment;
 import com.example.common.base.MyMMkv;
+import com.example.common.util.Utils;
 import com.example.module_community.R;
 import com.example.module_community.data.model.result.CommentResult;
 import com.example.module_community.databinding.FragmentCommunityDetailBinding;
@@ -27,7 +28,6 @@ import com.example.module_community.ui.adapter.CommentAdapter;
 import com.example.module_community.ui.adapter.model.CommentItem;
 import com.example.module_community.ui.viewmodel.CommunityDetailViewModel;
 import com.google.android.material.checkbox.MaterialCheckBox;
-import com.google.android.material.chip.Chip;
 import com.wx.goodview.GoodView;
 
 import java.text.SimpleDateFormat;
@@ -50,6 +50,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
         setExitTransition(new Explode());
     }
 
+    private int user_id;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
          * 基础资源
          * */
         int id = getArguments().getInt("post_id");
+        Log.d("世界是一个bug", String.valueOf(id));
         mViewModel = new ViewModelProvider(this).get(CommunityDetailViewModel.class);
 
         CommentAdapter adapter_comment = new CommentAdapter();
@@ -85,9 +87,10 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
             if (commentResult == null) {
                 return;
             }
+
             if (commentResult.getCode() == 200) {
                 skeleton_comment.hide();
-                Log.d("世界是一个bug", commentResult.toString());
+//                Log.d("世界是一个bug", commentResult.toString());
                 if (commentResult.getData().getComment_data() != null) {
                     adapter_comment.setCommentData(net2comment(commentResult));
                 }
@@ -99,6 +102,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
             if (postDetailResult == null) {
                 return;
             }
+            user_id = postDetailResult.getData().getPost_data().getUser_id();
             if (postDetailResult.getCode() == 200) {
                 skeleton_nickName.hide();
                 skeleton_avatar.hide();
@@ -149,16 +153,6 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
             }
         });
 
-        binding.chipIsFollowed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Chip c = (Chip) buttonView;
-                if (isChecked) {
-                    
-                }
-            }
-        });
-
         binding.iconCollect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -168,6 +162,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
                     GoodView goodView = new GoodView(getHoldingsActivity());
                     goodView.setText("收藏");
                     goodView.show(c);
+                    mViewModel.collect(MyMMkv.getMyDefaultMMkv().getString("token", null), user_id);
                     mViewModel.getmCollectMutableLiveData().observe(getViewLifecycleOwner(), collectResult -> {
                         if (collectResult == null) {
                             return;
@@ -181,7 +176,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
                     GoodView goodView = new GoodView(getHoldingsActivity());
                     goodView.setText("取消收藏");
                     goodView.show(c);
-                    mViewModel.cancelCollect(MyMMkv.getMyDefaultMMkv().getString("token", null), id);
+                    mViewModel.cancelCollect(MyMMkv.getMyDefaultMMkv().getString("token", null), user_id);
                     mViewModel.getmCancelCollectMutableLiveData().observe(getViewLifecycleOwner(), cancelCollectResult -> {
                         if (cancelCollectResult == null) {
                             return;
@@ -193,8 +188,35 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
                 }
             }
         });
-
-
+        binding.chipIsFollowed.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                mViewModel.follow(MyMMkv.getMyDefaultMMkv().getString("token", null), user_id);
+                mViewModel.getmFollowMutableLiveData().observe(getViewLifecycleOwner(), followResult -> {
+                    if (followResult == null) {
+                        return;
+                    }
+                    if (followResult.isSuccess()) {
+                        Toast.makeText(mActivity, "followed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                mViewModel.cancelFollow(MyMMkv.getMyDefaultMMkv().getString("token", null), user_id);
+                mViewModel.getmCancelFollowMutableLiveData().observe(getViewLifecycleOwner(), cancelFollowResult -> {
+                    if (cancelFollowResult == null) {
+                        return;
+                    }
+                    if (cancelFollowResult.isSuccess()) {
+                        Toast.makeText(mActivity, "unfollowed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        mViewModel.getThrowableMutableLiveData().observe(getViewLifecycleOwner(), throwable -> {
+            if (throwable == null) {
+                return;
+            }
+            Utils.tryAgain(throwable.getMessage(), getHoldingsActivity());
+        });
         binding.iconButtonShare.setOnClickListener(v -> {
             /*
              * 分享的dialog

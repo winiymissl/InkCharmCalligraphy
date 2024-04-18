@@ -29,7 +29,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.webView.loadUrl("http://www.linchixuan.com/");
+        binding.webView.loadUrl("https://shufadao.com/");
         binding.webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {

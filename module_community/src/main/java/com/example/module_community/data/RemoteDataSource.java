@@ -6,17 +6,21 @@ import com.example.module_community.dagger.CommunityModule;
 import com.example.module_community.dagger.DaggerCommunityComponent;
 import com.example.module_community.dagger.net.CommunityAPI;
 import com.example.module_community.data.model.request.CancelCollectRequest;
+import com.example.module_community.data.model.request.CancelFollowRequest;
 import com.example.module_community.data.model.request.CancelLikeRequest;
 import com.example.module_community.data.model.request.CollectRequest;
 import com.example.module_community.data.model.request.CommentRequest;
 import com.example.module_community.data.model.request.CommunityInfoRequest;
+import com.example.module_community.data.model.request.FollowRequest;
 import com.example.module_community.data.model.request.LikeRequest;
 import com.example.module_community.data.model.request.PostDetailRequest;
 import com.example.module_community.data.model.result.CancelCollectResult;
+import com.example.module_community.data.model.result.CancelFollowResult;
 import com.example.module_community.data.model.result.CancelLikeResult;
 import com.example.module_community.data.model.result.CollectResult;
 import com.example.module_community.data.model.result.CommentResult;
 import com.example.module_community.data.model.result.CommunityInfoResult;
+import com.example.module_community.data.model.result.FollowResult;
 import com.example.module_community.data.model.result.LikeResult;
 import com.example.module_community.data.model.result.PostDetailResult;
 import com.example.module_community.data.model.result.PostResult;
@@ -77,18 +81,26 @@ public class RemoteDataSource {
     }
 
     public Observable<LikeResult> like(String token, int post_id) {
-        return api.like(token, new LikeRequest(post_id)).subscribeOn(Schedulers.io());
+        return api.like("Bearer " + token, new LikeRequest(post_id)).subscribeOn(Schedulers.io());
     }
 
     public Observable<CancelLikeResult> cancelLike(String token, int post_id) {
-        return api.cancelLike(token, new CancelLikeRequest(post_id)).subscribeOn(Schedulers.io());
+        return api.cancelLike("Bearer " + token, new CancelLikeRequest(post_id)).subscribeOn(Schedulers.io());
     }
 
     public Observable<CollectResult> collect(String token, int post_id) {
-        return api.collect(token, new CollectRequest(post_id)).subscribeOn(Schedulers.io());
+        return api.collect("Bearer " + token, new CollectRequest(post_id)).subscribeOn(Schedulers.io());
     }
 
     public Observable<CancelCollectResult> cancelCollect(String token, int post_id) {
-        return api.cancelCollect(token, new CancelCollectRequest(post_id)).subscribeOn(Schedulers.io());
+        return api.cancelCollect("Bearer " + token, new CancelCollectRequest(post_id)).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<FollowResult> follow(String token, int user_id) {
+        return api.follow("Bearer " + token, new FollowRequest(user_id)).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<CancelFollowResult> cancelFollow(String token, int user_id) {
+        return api.cancelFollow("Bearer " + token, new CancelFollowRequest(user_id)).subscribeOn(Schedulers.io());
     }
 }

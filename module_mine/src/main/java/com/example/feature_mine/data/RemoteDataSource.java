@@ -5,7 +5,11 @@ import com.example.common.dagger.AppComponent;
 import com.example.feature_mine.dagger.DaggerMineComponent;
 import com.example.feature_mine.dagger.net.MineAPI;
 import com.example.feature_mine.data.model.request.ChangeUserInfoRequest;
+import com.example.feature_mine.data.model.request.FansRequest;
+import com.example.feature_mine.data.model.request.FollowRequest;
 import com.example.feature_mine.data.model.result.ChangeUserInfoResult;
+import com.example.feature_mine.data.model.result.FansResult;
+import com.example.feature_mine.data.model.result.FollowResult;
 import com.example.feature_mine.data.model.result.UserInfoResult;
 
 import javax.inject.Inject;
@@ -39,5 +43,13 @@ public class RemoteDataSource {
 
     public Observable<ChangeUserInfoResult> changeUserInfo(String token, String nick_name) {
         return api.changeUserInfo("Bearer " + token, new ChangeUserInfoRequest(nick_name)).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<FansResult> getFans(String token, int page, int page_size) {
+        return api.getFans("Bearer " + token, new FansRequest(page, page_size));
+    }
+
+    public Observable<FollowResult> getFollow(String token, int page, int page_size) {
+        return api.getFollow("Bearer " + token, new FollowRequest(page, page_size));
     }
 }
