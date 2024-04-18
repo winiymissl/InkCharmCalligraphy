@@ -22,9 +22,10 @@ import com.example.module_character.databinding.FragmentHistoryScoreBinding;
 public class HistoryScoreFragment extends BaseFragment<FragmentHistoryScoreBinding> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
         setEnterTransition(new Slide(Gravity.RIGHT));
         setExitTransition(new Slide(Gravity.RIGHT));
-        super.onCreate(savedInstanceState);
     }
 
     @Override

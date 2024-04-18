@@ -44,6 +44,10 @@ public class CommunityViewModel extends BaseViewModel {
         super(application);
     }
 
+    public LiveData<PostResult> getPostResultMutableLiveData() {
+        return postResultMutableLiveData;
+    }
+
     @Override
     protected void init() {
         super.init();

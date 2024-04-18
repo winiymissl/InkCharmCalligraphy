@@ -1,4 +1,4 @@
-package com.example.module_character.ui;
+package com.example.module_character.ui.two;
 
 import static android.app.Activity.RESULT_OK;
 

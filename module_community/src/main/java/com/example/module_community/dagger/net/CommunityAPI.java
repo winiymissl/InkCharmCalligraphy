@@ -19,7 +19,7 @@ import com.example.module_community.data.model.result.PostResult;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
-import okhttp3.RequestBody;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -38,7 +38,7 @@ public interface CommunityAPI {
 
     @POST("/community/create/post")
     @Multipart
-    Observable<PostResult> post(@Header("Authorization") String token, @Part("images") List<RequestBody> images, @Part("content") RequestBody content);
+    Observable<PostResult> post(@Header("Authorization") String token, @Part List<MultipartBody.Part> images, @Part MultipartBody.Part content);
 
     @POST("/community/view/post_details")
     Observable<PostDetailResult> getPostDetail(@Header("Authorization") String token, @Body PostDetailRequest request);

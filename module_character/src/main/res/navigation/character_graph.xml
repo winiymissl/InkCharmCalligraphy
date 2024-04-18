@@ -18,18 +18,18 @@
             android:id="@+id/action_characterFragment_to_historyScoreFragment"
             app:destination="@id/historyScoreFragment" />
         <action
-            android:id="@+id/action_characterFragment_to_enterViewFragment"
-            app:destination="@id/enterViewFragment" />
-        <action
             android:id="@+id/action_characterFragment_to_matchFragment"
             app:destination="@id/matchFragment" />
         <action
             android:id="@+id/action_characterFragment_to_recommendFragment"
             app:destination="@id/recommendFragment" />
+        <action
+            android:id="@+id/action_characterFragment_to_checkInFragment"
+            app:destination="@id/checkInFragment" />
     </fragment>
     <fragment
         android:id="@+id/scoreFragment"
-        android:name="com.example.module_character.ui.ScoreFragment"
+        android:name="com.example.module_character.ui.two.ScoreFragment"
         android:label="ScoreFragment">
         <action
             android:id="@+id/action_scoreFragment_to_answerFragment"
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/collectCharacterFragment"
-        android:name="com.example.module_character.ui.CollectCharacterFragment"
+        android:name="com.example.module_character.ui.two.CollectCharacterFragment"
         android:label="CollectCharacterFragment" />
     <fragment
         android:id="@+id/answerFragment"
@@ -46,17 +46,25 @@
     <fragment
         android:id="@+id/historyScoreFragment"
         android:name="com.example.module_character.ui.HistoryScoreFragment"
-        android:label="HistoryScoreFragment" />
-    <fragment
-        android:id="@+id/enterViewFragment"
-        android:name="com.example.module_character.ui.EnterViewFragment"
-        android:label="EnterViewFragment" />
+        android:label="HistoryScoreFragment" >
+        <action
+            android:id="@+id/action_historyScoreFragment_to_enterViewFragment"
+            app:destination="@id/enterViewFragment" />
+    </fragment>
     <fragment
         android:id="@+id/matchFragment"
-        android:name="com.example.module_character.ui.MatchFragment"
+        android:name="com.example.module_character.ui.two.MatchFragment"
         android:label="MatchFragment" />
     <fragment
         android:id="@+id/recommendFragment"
         android:name="com.example.module_character.ui.RecommendFragment"
         android:label="RecommendFragment" />
+    <fragment
+        android:id="@+id/checkInFragment"
+        android:name="com.example.module_character.ui.two.CheckInFragment"
+        android:label="CheckInFragment" />
+    <fragment
+        android:id="@+id/enterViewFragment"
+        android:name="com.example.module_character.ui.EnterViewFragment"
+        android:label="EnterViewFragment" />
 </navigation>

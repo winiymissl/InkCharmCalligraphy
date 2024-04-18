@@ -1,4 +1,4 @@
-package com.example.module_character.ui;
+package com.example.module_character.ui.two;
 
 import android.os.Bundle;
 import android.view.KeyEvent;

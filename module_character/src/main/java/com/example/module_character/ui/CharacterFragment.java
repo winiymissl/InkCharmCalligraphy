@@ -111,5 +111,8 @@ public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
         binding.chipRecommond.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.recommendFragment);
         });
+        binding.btnCheckIn.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(R.id.checkInFragment);
+        });
     }
 }

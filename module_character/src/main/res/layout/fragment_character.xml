@@ -53,6 +53,7 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/toolbar_two"
         android:layout_width="match_parent"
@@ -91,11 +92,12 @@
             app:cardElevation="0dp">
 
             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/btn_check_in"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="center"
-                android:text="临帖"
+                android:text="打卡"
                 android:textColor="@color/black" />
         </androidx.cardview.widget.CardView>
     </androidx.appcompat.widget.LinearLayoutCompat>

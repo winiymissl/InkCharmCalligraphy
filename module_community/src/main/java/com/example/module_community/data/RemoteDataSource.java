@@ -31,6 +31,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -57,12 +58,13 @@ public class RemoteDataSource {
         /*
          * 处理有关逻辑
          * */
-        List<RequestBody> requestBodyList = new ArrayList<>();
+        List<MultipartBody.Part> requestBodyList = new ArrayList<>();
         list.forEach(file -> {
             RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            requestBodyList.add(body);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("images", file.getName(), body);
+            requestBodyList.add(part);
         });
-        RequestBody contentBody = RequestBody.create(MediaType.parse("multipart/form-data"), content);
+        MultipartBody.Part contentBody = MultipartBody.Part.createFormData("content", content);
         return api.post(token, requestBodyList, contentBody).subscribeOn(Schedulers.io());
     }
 
