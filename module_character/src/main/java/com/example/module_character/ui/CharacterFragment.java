@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.common.base.BaseFragment;
@@ -16,10 +17,15 @@ import com.example.common.util.Utils;
 import com.example.module_character.R;
 import com.example.module_character.databinding.FragmentCharacterBinding;
 import com.example.module_character.ui.adapter.RecyclerviewAdapter;
+import com.example.module_character.ui.viewmodel.CharacterViewModel;
 import com.google.android.material.carousel.CarouselLayoutManager;
 import com.google.android.material.carousel.HeroCarouselStrategy;
-import com.google.android.material.carousel.MultiBrowseCarouselStrategy;
 import com.google.android.material.transition.MaterialFade;
+import com.youth.banner.adapter.BannerImageAdapter;
+import com.youth.banner.holder.BannerImageHolder;
+import com.youth.banner.indicator.CircleIndicator;
+import com.youth.banner.transformer.DepthPageTransformer;
+import com.youth.banner.transformer.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,8 @@ import java.util.List;
  * @Version 1.0
  */
 public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
+
+    private CharacterViewModel mViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,27 +70,56 @@ public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+        mViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
 //        ShapeableImageView shapeableImageView = (ShapeableImageView) view1.findViewById(R.id.carousel_image_view);
 //        FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder().addSharedElement(shapeableImageView, shapeableImageView.getTransitionName()).build();
 //        NavHostFragment.findNavController(this).navigate(R.id.enterViewFragment, null, null, extras);
-
+        mViewModel.fetchSentence("i");
+        mViewModel.getmSentenceMutableLiveData().observe(getViewLifecycleOwner(), sentenceResult -> {
+            if (sentenceResult == null) {
+                return;
+            }
+            binding.textviewSentence.setText(sentenceResult.getHitokoto() + "\n  ——" + sentenceResult.getFrom());
+        });
+        mViewModel.getThrowableLiveData().observe(getViewLifecycleOwner(), throwable -> {
+            if (throwable == null) {
+                return;
+            }
+            Utils.tryAgain(throwable.getMessage(), getActivity());
+        });
+        binding.buttonOtherOne.setOnClickListener(v -> {
+            mViewModel.fetchSentence("f");
+        });
         RecyclerviewAdapter adapter = new RecyclerviewAdapter();
         List<Integer> list = new ArrayList<>();
         list.add(com.example.common.R.drawable.ic_history);
         list.add(com.example.common.R.drawable.ic_history_2);
         list.add(com.example.common.R.drawable.ic_shoujin_history);
+        list.add(com.example.common.R.drawable.ic_shoujin_history);
+        list.add(com.example.common.R.drawable.ic_caoshu);
+        list.add(com.example.common.R.drawable.ic_caoshu_recommand);
         adapter.setData(list);
         binding.carouselRecyclerViewHistory.setLayoutManager(new CarouselLayoutManager(new HeroCarouselStrategy()));
         binding.carouselRecyclerViewHistory.setAdapter(adapter);
 
-        RecyclerviewAdapter adapter_recommand = new RecyclerviewAdapter();
-        List<Integer> list_recommand = new ArrayList<>();
-        list_recommand.add(com.example.common.R.drawable.ic_shoujin_history);
-        list_recommand.add(com.example.common.R.drawable.ic_caoshu);
-        list_recommand.add(com.example.common.R.drawable.ic_caoshu_recommand);
-        adapter_recommand.setData(list_recommand);
-        binding.carouselRecyclerViewRecommond.setLayoutManager(new CarouselLayoutManager(new MultiBrowseCarouselStrategy()));
-        binding.carouselRecyclerViewRecommond.setAdapter(adapter_recommand);
+
+        BannerImageAdapter imageAdapter = new BannerImageAdapter(list) {
+
+            @Override
+            public void onBindView(Object holder, Object data, int position, int size) {
+                BannerImageHolder myHolder = (BannerImageHolder) holder;
+                myHolder.imageView.setImageResource(list.get(position));
+            }
+
+        };
+        binding.banner.setAdapter(imageAdapter);
+        binding.banner.addPageTransformer(new ZoomOutPageTransformer());
+        binding.banner.addPageTransformer(new DepthPageTransformer(2));
+        binding.banner.setIndicator(new CircleIndicator(getActivity()));
+
+        binding.buttonRecognise.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(R.id.TFragment);
+        });
 
         binding.textViewScore.setOnClickListener(v -> {
             if (isLogin()) {
@@ -108,9 +145,7 @@ public class CharacterFragment extends BaseFragment<FragmentCharacterBinding> {
         binding.buttonMatch.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.matchFragment);
         });
-        binding.chipRecommond.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this).navigate(R.id.recommendFragment);
-        });
+
         binding.btnCheckIn.setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.checkInFragment);
         });

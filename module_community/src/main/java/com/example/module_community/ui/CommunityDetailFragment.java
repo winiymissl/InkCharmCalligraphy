@@ -69,6 +69,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
         Log.d("世界是一个bug", String.valueOf(id));
         mViewModel = new ViewModelProvider(this).get(CommunityDetailViewModel.class);
 
+
         CommentAdapter adapter_comment = new CommentAdapter();
         binding.recyclerViewComment.setLayoutManager(new LinearLayoutManager(getHoldingsActivity()));
         binding.recyclerViewComment.setAdapter(adapter_comment);
@@ -79,9 +80,8 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
         ViewSkeletonScreen skeleton_content = Skeleton.bind(binding.textViewContent).load(R.layout.item_skeleton_content).show();
         RecyclerViewSkeletonScreen skeleton_comment = Skeleton.bind(binding.recyclerViewComment).adapter(adapter_comment).load(R.layout.item_skeleton_comment).show();
 
-        mViewModel.fetchCommentData(id, 1, 1);
+//        mViewModel.fetchCommentData(id, 1, 10);
         mViewModel.fetchPostData(MyMMkv.getMyDefaultMMkv().getString("token", null), id);
-
 
         mViewModel.getmCommentMutableLiveData().observe(getViewLifecycleOwner(), commentResult -> {
             if (commentResult == null) {
@@ -92,6 +92,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
                 skeleton_comment.hide();
 //                Log.d("世界是一个bug", commentResult.toString());
                 if (commentResult.getData().getComment_data() != null) {
+
                     adapter_comment.setCommentData(net2comment(commentResult));
                 }
             } else {
@@ -162,7 +163,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
                     GoodView goodView = new GoodView(getHoldingsActivity());
                     goodView.setText("收藏");
                     goodView.show(c);
-                    mViewModel.collect(MyMMkv.getMyDefaultMMkv().getString("token", null), user_id);
+                    mViewModel.collect(MyMMkv.getMyDefaultMMkv().getString("token", null), id);
                     mViewModel.getmCollectMutableLiveData().observe(getViewLifecycleOwner(), collectResult -> {
                         if (collectResult == null) {
                             return;
@@ -176,7 +177,7 @@ public class CommunityDetailFragment extends BaseFragment<FragmentCommunityDetai
                     GoodView goodView = new GoodView(getHoldingsActivity());
                     goodView.setText("取消收藏");
                     goodView.show(c);
-                    mViewModel.cancelCollect(MyMMkv.getMyDefaultMMkv().getString("token", null), user_id);
+                    mViewModel.cancelCollect(MyMMkv.getMyDefaultMMkv().getString("token", null), id);
                     mViewModel.getmCancelCollectMutableLiveData().observe(getViewLifecycleOwner(), cancelCollectResult -> {
                         if (cancelCollectResult == null) {
                             return;

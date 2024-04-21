@@ -4,6 +4,7 @@ import com.example.common.dagger.AppComponent;
 import com.example.common.dagger.PreActivity;
 import com.example.module_character.data.RemoteDataSource;
 import com.example.module_character.data.Repository;
+import com.example.module_character.ui.viewmodel.CharacterViewModel;
 import com.example.module_character.ui.viewmodel.CheckInViewModel;
 
 import dagger.Component;
@@ -22,4 +23,6 @@ public interface CharacterComponent {
     void injectTo(Repository repository);
 
     void injectTo(RemoteDataSource remoteDataSource);
+
+    void injectTo(CharacterViewModel viewModel);
 }

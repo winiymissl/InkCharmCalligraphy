@@ -1,6 +1,7 @@
 package com.example.feature_mine.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.common.base.BaseFragment;
 import com.example.common.base.MyMMkv;
@@ -39,19 +42,27 @@ public class FansFragment extends BaseFragment<FragmentFansBinding> {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MineViewModel.class);
         FansReceyclerviewAdapter adapter = new FansReceyclerviewAdapter();
+        binding.recyclerViewFans.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        binding.recyclerViewFans.setAdapter(adapter);
         mViewModel.fetchFans(MyMMkv.getMyDefaultMMkv().getString("token", null), 1, 10);
         mViewModel.getFansResultMutableLiveData().observe(getViewLifecycleOwner(), result -> {
             if (result == null) {
                 return;
             }
-            adapter.setData(net2fans(result));
+            Log.d("世界是一个bug", " getFansResultMutableLiveData   :  " + result.toString());
+            if (result.getData().getPost_data() != null) {
+                adapter.setData(net2fans(result));
+            }
+        });
+        binding.chip.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).popBackStack();
         });
     }
 
     private List<FansItem> net2fans(FansResult result) {
         List<FansItem> list = new ArrayList<>();
-        result.getData().getPostData().forEach(item -> {
-            list.add(new FansItem(item.getUserId(), item.getAvatarBackground(), item.getNickName(), item.getFollowCount(), item.getFansCount(), item.getEmail()));
+        result.getData().getPost_data().forEach(item -> {
+            list.add(new FansItem(item.getUser_id(), item.getAvatar_background(), item.getNick_name(), item.getFollow_count(), item.getFans_count(), item.getEmail()));
         });
         return list;
     }

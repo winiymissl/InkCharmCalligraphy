@@ -10,8 +10,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="150dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
@@ -28,7 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
-
             android:text="@{item.nick_name}"
             app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,39 +46,42 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="120dp"
+            android:layout_marginStart="76dp"
             android:layout_marginBottom="40dp"
             android:text="粉丝"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView_fans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="72dp"
+            android:layout_marginStart="136dp"
+
             android:layout_marginBottom="40dp"
-            android:text="@{item.fans_count}"
+            android:text="@{String.valueOf(item.fans_count)}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="120dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginBottom="4dp"
             android:text="关注"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="72dp"
-            android:layout_marginBottom="8dp"
-            android:text="@{item.follow_count}"
+            android:layout_marginStart="136dp"
+            android:layout_marginBottom="4dp"
+            android:text="@{String.valueOf(item.follow_count)}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

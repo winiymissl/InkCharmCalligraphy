@@ -152,6 +152,15 @@ public class PostDetailResult extends BaseResult {
             private Boolean whether_collect;
             private Boolean whether_follow;
 
+            @Override
+            public String toString() {
+                return "StatusDataDTO{" +
+                        "whether_like=" + whether_like +
+                        ", whether_collect=" + whether_collect +
+                        ", whether_follow=" + whether_follow +
+                        '}';
+            }
+
             public Boolean getWhether_follow() {
                 return whether_follow;
             }

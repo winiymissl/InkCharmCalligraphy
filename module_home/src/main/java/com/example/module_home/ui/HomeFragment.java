@@ -1,5 +1,6 @@
 package com.example.module_home.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,12 @@ import androidx.annotation.Nullable;
 import com.example.common.base.BaseFragment;
 import com.example.module_home.R;
 import com.example.module_home.databinding.FragmentHomeBinding;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions;
+
+import java.io.IOException;
 
 /**
  * @Author winiymissl
@@ -30,6 +37,19 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.webView.loadUrl("https://shufadao.com/");
+
+
+        TextRecognizer recognizer = TextRecognition.getClient(new ChineseTextRecognizerOptions.Builder().build());
+
+        InputImage image;
+
+
+        Uri uri = Uri.parse("");
+        try {
+            image = InputImage.fromFilePath(getActivity(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         binding.webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -46,4 +66,5 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         binding = FragmentHomeBinding.bind(view);
         return binding.getRoot();
     }
+
 }

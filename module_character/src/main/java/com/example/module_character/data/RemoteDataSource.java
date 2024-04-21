@@ -6,6 +6,7 @@ import com.example.module_character.dagger.CharacterModule;
 import com.example.module_character.dagger.DaggerCharacterComponent;
 import com.example.module_character.dagger.net.CharacterAPI;
 import com.example.module_character.data.result.CheckInResult;
+import com.example.module_character.data.result.SentenceResult;
 
 import java.io.File;
 
@@ -40,5 +41,9 @@ public class RemoteDataSource {
         MultipartBody.Part contentPart = MultipartBody.Part.createFormData("content", content);
         MultipartBody.Part scorePart = MultipartBody.Part.createFormData("score", String.valueOf(score));
         return api.checkIn("Bearer " + token, body, contentPart, scorePart).subscribeOn(Schedulers.io());
+    }
+
+    public Observable<SentenceResult> getSentence(String c) {
+        return api.getSentence(c).subscribeOn(Schedulers.io());
     }
 }

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.common.base.BaseFragment;
 import com.example.common.base.MyMMkv;
@@ -40,11 +42,18 @@ public class FollowFragment extends BaseFragment<FragmentFollowBinding> {
         mViewModel = new ViewModelProvider(this).get(MineViewModel.class);
         FollowRecyclerviewAdapter adapter = new FollowRecyclerviewAdapter();
         mViewModel.fetchFollow(MyMMkv.getMyDefaultMMkv().getString("token", null), 1, 10);
+        binding.recyclerViewFollow.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        binding.recyclerViewFollow.setAdapter(adapter);
         mViewModel.getFollowResultMutableLiveData().observe(getViewLifecycleOwner(), result -> {
             if (result == null) {
                 return;
             }
-            adapter.setData(net2Follow(result));
+            if (result.getData().getPost_data() != null) {
+                adapter.setData(net2Follow(result));
+            }
+        });
+        binding.chip.setOnClickListener(v->{
+            NavHostFragment.findNavController(this).popBackStack();
         });
     }
 
@@ -53,7 +62,6 @@ public class FollowFragment extends BaseFragment<FragmentFollowBinding> {
         result.getData().getPost_data().forEach(item -> {
             list.add(new FollowItem(item.getUser_id(), item.getAvatar_background(), item.getNick_name(), item.getFollow_count(), item.getFans_count(), item.getEmail()));
         });
-
         return list;
     }
 

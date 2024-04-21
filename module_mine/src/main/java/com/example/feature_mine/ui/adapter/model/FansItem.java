@@ -18,6 +18,18 @@ public class FansItem {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "FansItem{" +
+                "user_id=" + user_id +
+                ", avatar_background='" + avatar_background + '\'' +
+                ", nick_name='" + nick_name + '\'' +
+                ", follow_count=" + follow_count +
+                ", fans_count=" + fans_count +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     private Integer user_id;
     private String avatar_background;
     private String nick_name;

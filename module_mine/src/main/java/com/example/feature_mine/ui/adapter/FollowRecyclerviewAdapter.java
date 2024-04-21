@@ -23,6 +23,7 @@ public class FollowRecyclerviewAdapter extends RecyclerView.Adapter {
     List<FollowItem> list = new ArrayList<>();
 
     public void setData(List<FollowItem> result) {
+        list.clear();
         for (int i = 0; i < result.size(); i++) {
             list.add(result.get(i));
             notifyItemInserted(i);

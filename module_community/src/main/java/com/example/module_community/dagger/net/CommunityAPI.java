@@ -53,7 +53,7 @@ public interface CommunityAPI {
     @POST("/community/like/post")
     Observable<LikeResult> like(@Header("Authorization") String token, @Body LikeRequest request);
 
-    @POST("/community/delete/post")
+    @POST("/community/cancel/like")
     Observable<CancelLikeResult> cancelLike(@Header("Authorization") String token, @Body CancelLikeRequest request);
 
     @POST("/community/collect/post")

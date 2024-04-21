@@ -123,7 +123,6 @@ public class CommunityDetailViewModel extends BaseViewModel {
             mThrowableMutableLiveData.postValue(error);
         });
     }
-
     @SuppressLint("CheckResult")
     public void follow(String token, int user_id) {
         repository.getRemoteDataSource().follow(token, user_id).subscribe(followResult -> {

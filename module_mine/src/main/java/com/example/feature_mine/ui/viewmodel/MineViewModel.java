@@ -39,7 +39,6 @@ public class MineViewModel extends BaseViewModel {
 
     private MutableLiveData<InputFormState> inputFormState = new MutableLiveData<>();
 
-
     private MutableLiveData<FollowResult> followResultMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<FansResult> fansResultMutableLiveData = new MutableLiveData<>();
 

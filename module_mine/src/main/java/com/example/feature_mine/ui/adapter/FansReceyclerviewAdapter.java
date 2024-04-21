@@ -1,5 +1,6 @@
 package com.example.feature_mine.ui.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.example.feature_mine.ui.adapter.model.FansItem;
 import com.example.module_mine.R;
 import com.example.module_mine.databinding.ItemRecyclerviewFansBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,12 +22,14 @@ import java.util.List;
  */
 
 public class FansReceyclerviewAdapter extends RecyclerView.Adapter {
-    List<FansItem> list;
+    List<FansItem> list = new ArrayList<>();
 
     public void setData(List<FansItem> result) {
+        list.clear();
         for (int i = 0; i < result.size(); i++) {
             list.add(result.get(i));
             notifyItemInserted(i);
+            Log.d("世界是一个bug", "  最新测试   " + result.toString());
         }
     }
 
@@ -52,7 +56,7 @@ public class FansReceyclerviewAdapter extends RecyclerView.Adapter {
         }
 
         void bindTo(FansItem item) {
-
+            binding.setItem(item);
         }
     }
 
