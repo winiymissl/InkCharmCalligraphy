@@ -4,9 +4,8 @@
 
 目标：
 
-- [ ] 阿里的ARouter针对Navigation框架做个路由库
+- [x] 阿里的ARouter针对Navigation框架做个路由库
 - [ ] webView使用多进程，避免内存泄漏
-- [ ] 定义RemoteView
 - [ ] 完善提示功能
 - [ ] 比赛模块
 - [x] 在compiler中自定义Logger 
